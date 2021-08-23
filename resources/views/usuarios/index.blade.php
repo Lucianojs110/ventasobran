@@ -2,8 +2,9 @@
 @section('content')
     <section class="content">
         <div class="box">
+            @can('Superadmin')
             <div class="box-header with-border">
-
+                
                 <div class="row">
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                         <h3>Listado de Usuarios del Sistema
@@ -32,6 +33,7 @@
                     </div>
                 </div>
             </div>
+            @endcan
         </div>
     </section>
 @endsection

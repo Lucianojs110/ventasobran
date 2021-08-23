@@ -229,7 +229,7 @@
                                         <ul class="treeview-menu">
                                             <li class="{{Request::is('login') ? 'active' :  '' }}"><a
                                                         href="{{ route('login') }}"><i class="fa fa-user"></i>Iniciar
-                                                    Seción</a></li>
+                                                    Sesión</a></li>
                                             <li class="{{Request::is('register') ? 'active' :  '' }}"><a
                                                         href="{{ route('register') }}"><i class="fa fa-user-plus"></i>Registrarme</a>
                                             </li>

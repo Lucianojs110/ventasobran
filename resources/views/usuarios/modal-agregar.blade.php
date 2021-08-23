@@ -28,6 +28,23 @@
                         <input type="password" name="password" class="form-control">
                     </div>
 
+                    <div class="py-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <label class="text-gray-700" for="rol">
+                        Rol:
+                        <select class="block w-52 text-gray-700 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="rol">
+                            <option value="Superadmin">
+                                Superadmin
+                            </option>
+                            <option value="Supervisor">
+                                Supervisor
+                            </option>
+                            <option value="Vendedor">
+                                Vendedor
+                            </option>
+                        </select>
+
+                    </div>
+                    
                 </div>
                 {!!Form::close()!!}
             </div>

@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Input;
 
 use SisVentaNew\Http\Requests\UsuarioFormRequest;
 
-use DB;
 
 use SisVentaNew\User;
 use Yajra\DataTables\Facades\DataTables;
@@ -53,14 +53,30 @@ class UsuarioController extends Controller
 
     public function store (Request $request)
     {
+        if(auth()->user()->hasRole('Superadmin')){
+            $user = New User();
+            $user->name = $request->name;
+            $user->apellido = $request->apellido;
+            $user->estado = 'Activo';
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->save();
 
-        $user = New User();
-        $user->name = $request->name;
-        $user->apellido = $request->apellido;
-        $user->estado = 'Activo';
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->save();
+            switch($request->rol){
+                case 'Superadmin':
+                    DB::table('rols_user')->insert(['user_id' => $user->id, 'role_id' => 1]);
+                    break;
+                case 'Supervisor':
+                    DB::table('rols_user')->insert(['user_id' => $user->id, 'role_id' => 2]);  
+                    break;
+                case 'Vendedor':  
+                    DB::table('rols_user')->insert(['user_id' => $user->id, 'role_id' => 3]);
+                    break;
+            }
+        }else{
+            toastr()->error('No tiene permisos para realizar ésta acción',);
+            return Redirect::back();
+        }
 
         toastr()->success('Su usuario se ha agregado correctamente!', ''.$request->name);
         return Redirect::back();

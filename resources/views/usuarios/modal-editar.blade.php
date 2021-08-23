@@ -24,7 +24,7 @@
                         <input value="{{$use->email}}" type="email" name="email" class="form-control">
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <label class="fuente" for="documento">Cambiar contraseña (sino decea cambiarla, no modificar
+                        <label class="fuente" for="documento">Cambiar contraseña (sino desea cambiarla, no modificar
                             campo)</label>
                         <input type="password" class="form-control" name="password"/>
                     </div>
