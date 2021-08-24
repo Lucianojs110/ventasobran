@@ -26,7 +26,10 @@ class UsuarioController extends Controller
     public function index()
     {
         $user = User::where('estado','Activo')->get();
-        return view('usuarios.index', compact('user'));
+
+        $roles = DB::table('roles')->select('id', 'name')->get();
+        $user_roles = DB::table('rols_user')->select('id', 'user_id', 'role_id')->get();
+        return view('usuarios.index', compact(['user', 'roles', 'user_roles']));
 
     }
 
@@ -53,7 +56,14 @@ class UsuarioController extends Controller
 
     public function store (Request $request)
     {
+        $vali = User::where('email', $request->email)->first();
+
+        if($vali != null){
+            toastr()->error('Error, email ya existente',);
+            return Redirect::back();
+        }
         if(auth()->user()->hasRole('Superadmin')){
+
             $user = New User();
             $user->name = $request->name;
             $user->apellido = $request->apellido;
@@ -61,18 +71,9 @@ class UsuarioController extends Controller
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
             $user->save();
-
-            switch($request->rol){
-                case 'Superadmin':
-                    DB::table('rols_user')->insert(['user_id' => $user->id, 'role_id' => 1]);
-                    break;
-                case 'Supervisor':
-                    DB::table('rols_user')->insert(['user_id' => $user->id, 'role_id' => 2]);  
-                    break;
-                case 'Vendedor':  
-                    DB::table('rols_user')->insert(['user_id' => $user->id, 'role_id' => 3]);
-                    break;
-            }
+            
+            DB::table('rols_user')->insert(['user_id' => $user->id, 'role_id' => $request->rol]);
+                
         }else{
             toastr()->error('No tiene permisos para realizar ésta acción',);
             return Redirect::back();
@@ -84,18 +85,25 @@ class UsuarioController extends Controller
 
     public function update(Request $request, $id)
     {
-
-        $user = User::find($id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        if ($request->password != null)
-        {
-            $user->password = Hash::make($request->password);
+        if(auth()->user()->hasRole('Superadmin')){
+            $user = User::find($id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            if ($request->password != null)
+            {
+                $user->password = Hash::make($request->password);
+            }
+            $user->save();
+           
+            DB::table('rols_user')->where('user_id', $id)->update(['role_id' => $request->rol]);
+                    
+            toastr()->info('Su usuario se ha editado correctamente!', ''.$request->name);
+            return Redirect::back();
+        }else{
+            toastr()->error('No tiene permisos para realizar tal accion',);
+            return Redirect::back();
         }
-        $user->save();
-
-        toastr()->info('Su usuario se ha editado correctamente!', ''.$request->name);
-        return Redirect::back();
+        
     }
 
     public function delete($id)
@@ -103,6 +111,9 @@ class UsuarioController extends Controller
         $users = User::find($id);
         $users->estado = 'Desactivo';
         $users->save();
+
+        DB::table('rols_user')->where('user_id', $id)->delete();
+
         toastr()->error('Su usuario se ha borrado correctamente!', ''.$users->name);
         return Redirect::back();
 

@@ -32,15 +32,10 @@
                     <label class="text-gray-700" for="rol">
                         Rol:
                         <select class="block w-52 text-gray-700 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="rol">
-                            <option value="Superadmin">
-                                Superadmin
-                            </option>
-                            <option value="Supervisor">
-                                Supervisor
-                            </option>
-                            <option value="Vendedor">
-                                Vendedor
-                            </option>
+                            <option selected disabled>Seleccionar rol</option>
+                            @foreach($roles as $rols)
+                                <option value="{{$rols->id}}"> {{$rols->name}}</option>
+                            @endforeach
                         </select>
 
                     </div>

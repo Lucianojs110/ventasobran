@@ -44,10 +44,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     $this->rols()->sync($role, false);
   }
 
+  public function tieneRol(){
+    return $this->rols->flatten()->pluck('name')->unique();
+  }
+
   public function hasRole($role){
     $userId = auth()->user()->id;
     $rol = DB::table('roles')->where('name', $role)->first();
-
+    
     $userRole = DB::table('rols_user')->where('user_id', $userId)->where('role_id', $rol->id)->first();
 
     if($userRole != null){

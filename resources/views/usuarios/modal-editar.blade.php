@@ -28,6 +28,32 @@
                             campo)</label>
                         <input type="password" class="form-control" name="password"/>
                     </div>
+
+                    <div class="py-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <label class="text-gray-700" for="rol">
+                        Rol:
+                        <select name="rol" class="form-control">
+                            
+                            @foreach($user_roles as $usrol)
+                                @if($usrol->user_id == $use->id)
+
+                                    @foreach($roles as $rols)
+                                        @if($usrol->role_id == $rols->id)
+                                            <option value="{{$rols->id}}" selected> {{$rols->name}} </option>
+                                        @else
+                                            <option value="{{$rols->id}}"> {{$rols->name}} </option>
+                                        @endif
+                                    @endforeach
+
+                                @endif
+
+                            @endforeach
+                            
+                            
+                        </select>
+
+                    </div>
+
                 </div>
                 {!!Form::close()!!}
             </div>
