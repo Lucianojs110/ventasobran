@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <section class="content">
+        @canany(['Supervisor' , 'Vendedor'])
         <div class="box">
             <div class="box-header with-border">
 
@@ -28,6 +29,7 @@
                 </div>
             </div>
         </div>
+        @endcanany
     </section>
 @endsection
 @section('js')

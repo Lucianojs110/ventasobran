@@ -18,6 +18,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
     <section class="content" >
         <div class="box">
+            @canany(['Supervisor', 'Vendedor'])
             <div class="box-header with-border">
                 <div class="row">
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
@@ -65,6 +66,7 @@
                     </div>
                 </div>
             </div>
+            @endcanany
         </div>
     
     @include('almacen.articulo.modal-agregar')

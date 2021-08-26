@@ -2,6 +2,7 @@
 @section('content')
     <section class="content">
         <div class="box">
+            @canany(['Supervisor'])
             <div class="box-header with-border">
                 <div class="row">
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
@@ -50,6 +51,7 @@
                     </div>
                 </div>
             </div>
+            @endcanany
         </div>
     </section>
 @endsection

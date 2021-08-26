@@ -10,6 +10,7 @@
 @endsection
 @section('content')
     <section class="content">
+        @canany(['Supervisor' , 'Vendedor'])
         <div class="box">
             <div class="box-header with-border">
                 <div class="row">
@@ -40,6 +41,7 @@
                 </div>
             </div>
         </div>
+        @endcanany
         @foreach($arqueo as $arq)
             @include('arqueo.modal-cerrar')
         @endforeach
