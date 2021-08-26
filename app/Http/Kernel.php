@@ -58,5 +58,6 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \SisVentaNew\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'supervendedor' => \SisVentaNew\Http\Middleware\SupervisorVendedorMiddleware::class,
     ];
 }

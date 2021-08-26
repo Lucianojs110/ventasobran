@@ -2,7 +2,6 @@
 @section('content')
     <section class="content">
         <div class="box">
-            @can('Superadmin')
             <div class="box-header with-border">
                 
                 <div class="row">
@@ -33,7 +32,6 @@
                     </div>
                 </div>
             </div>
-            @endcan
         </div>
     </section>
 @endsection

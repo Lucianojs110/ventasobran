@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
     <section class="content">
-        @canany(['Supervisor'])
         <div class="box">
             <div class="box-header with-border">
                 <div class="row">
@@ -32,7 +31,6 @@
                 </div>
             </div>
         </div>
-        @endcanany
     </section>
 @endsection
 @section('js')

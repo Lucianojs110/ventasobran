@@ -3,7 +3,6 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
     <section class="content">
         <div class="box">
-            @can(['Supervisor'])
             <div class="box-header with-border">
 
                 <div class="row">
@@ -37,7 +36,6 @@
                     </div>
                 </div>
             </div>
-            @endcan
         </div>
     </section>
 @endsection

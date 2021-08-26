@@ -29,104 +29,104 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 //    ARTICULO
-    Route::get('/articulo', 'ArticuloController@index')->name('articulo.index');
-    Route::get('/articulo-tabla', 'ArticuloController@tabla')->name('articulo.tabla');
-    Route::post('articulo-store', 'ArticuloController@store')->name('articulo.store');
-    Route::patch('articulo-update/{id}', 'ArticuloController@update')->name('articulo.update');
-    Route::delete('articulo-delete/{id}', 'ArticuloController@destroy')->name('articulo.destroy');
-    Route::put('articulo-cambiar/{id}', 'ArticuloController@cambiar')->name('cambiar.precio');
-    Route::post('actualizarprecios', 'ArticuloController@actualizarprecios')->name('actualizarprecios');
+    Route::get('/articulo', 'ArticuloController@index')->name('articulo.index')->middleware('supervendedor');
+    Route::get('/articulo-tabla', 'ArticuloController@tabla')->name('articulo.tabla')->middleware('supervendedor');
+    Route::post('articulo-store', 'ArticuloController@store')->name('articulo.store')->middleware('can:Supervisor');
+    Route::patch('articulo-update/{id}', 'ArticuloController@update')->name('articulo.update')->middleware('can:Supervisor');
+    Route::delete('articulo-delete/{id}', 'ArticuloController@destroy')->name('articulo.destroy')->middleware('can:Supervisor');
+    Route::put('articulo-cambiar/{id}', 'ArticuloController@cambiar')->name('cambiar.precio')->middleware('can:Supervisor');
+    Route::post('actualizarprecios', 'ArticuloController@actualizarprecios')->name('actualizarprecios')->middleware('can:Supervisor');
 
 
 //    CATEGORIA
-    Route::get('/categoria', 'CategoriaController@index')->name('categoria.index');
-    Route::get('/categoria-tabla', 'CategoriaController@tabla')->name('categoria.tabla');
-    Route::post('categoria-store', 'CategoriaController@store')->name('categoria.store');
-    Route::patch('categoria-update/{id}', 'CategoriaController@update')->name('categoria.update');
-    Route::delete('categoria-delete/{id}', 'CategoriaController@destroy')->name('categoria.destroy');
+    Route::get('/categoria', 'CategoriaController@index')->name('categoria.index')->middleware('can:Supervisor');
+    Route::get('/categoria-tabla', 'CategoriaController@tabla')->name('categoria.tabla')->middleware('can:Supervisor');
+    Route::post('categoria-store', 'CategoriaController@store')->name('categoria.store')->middleware('can:Supervisor');
+    Route::patch('categoria-update/{id}', 'CategoriaController@update')->name('categoria.update')->middleware('can:Supervisor');
+    Route::delete('categoria-delete/{id}', 'CategoriaController@destroy')->name('categoria.destroy')->middleware('can:Supervisor');
 
 
 //    CLIENTES
-    Route::get('/cliente', 'ClienteController@index')->name('cliente.index');
-    Route::get('/cliente-tabla', 'ClienteController@tabla')->name('cliente.tabla');
-    Route::post('cliente-store', 'ClienteController@store')->name('cliente.store');
-    Route::patch('cliente-update/{id}', 'ClienteController@update')->name('cliente.update');
-    Route::delete('cliente-delete/{id}', 'ClienteController@destroy')->name('cliente.destroy');
-    Route::post('consultarcuit', 'ClienteController@consultarcuit')->name('consultarcuit');
+    Route::get('/cliente', 'ClienteController@index')->name('cliente.index')->middleware('can:Supervisor');
+    Route::get('/cliente-tabla', 'ClienteController@tabla')->name('cliente.tabla')->middleware('can:Supervisor');
+    Route::post('cliente-store', 'ClienteController@store')->name('cliente.store')->middleware('can:Supervisor');
+    Route::patch('cliente-update/{id}', 'ClienteController@update')->name('cliente.update')->middleware('can:Supervisor');
+    Route::delete('cliente-delete/{id}', 'ClienteController@destroy')->name('cliente.destroy')->middleware('can:Supervisor');
+    Route::post('consultarcuit', 'ClienteController@consultarcuit')->name('consultarcuit')->middleware('can:Supervisor');
 
 //    PROVEEDORES
-    Route::get('/proveedor', 'ProveedorController@index')->name('proveedor.index');
-    Route::get('/proveedor-tabla', 'ProveedorController@tabla')->name('proveedor.tabla');
-    Route::post('proveedor-store', 'ProveedorController@store')->name('proveedor.store');
-    Route::patch('proveedor-update/{id}', 'ProveedorController@update')->name('proveedor.update');
-    Route::delete('proveedor-delete/{id}', 'ProveedorController@destroy')->name('proveedor.destroy');
+    Route::get('/proveedor', 'ProveedorController@index')->name('proveedor.index')->middleware('can:Supervisor');
+    Route::get('/proveedor-tabla', 'ProveedorController@tabla')->name('proveedor.tabla')->middleware('can:Supervisor');
+    Route::post('proveedor-store', 'ProveedorController@store')->name('proveedor.store')->middleware('can:Supervisor');
+    Route::patch('proveedor-update/{id}', 'ProveedorController@update')->name('proveedor.update')->middleware('can:Supervisor');
+    Route::delete('proveedor-delete/{id}', 'ProveedorController@destroy')->name('proveedor.destroy')->middleware('can:Supervisor');
 
 //    VENTA
-    Route::get('ventas', 'VentaController@index')->name('venta.index');
-    Route::get('ventas-crear', 'VentaController@create')->name('venta.create');
-    Route::get('ventas-tabla', 'VentaController@tabla')->name('venta.tabla');
-    Route::get('ventas-ver/{id}', 'VentaController@show')->name('venta.show');
-    Route::get('ventas-editar/{id}', 'VentaController@edit')->name('venta.edit');
-    Route::get('venta-ticke/{id}', 'VentaController@ticke')->name('venta.ticke');
-    Route::post('ventas-store', 'VentaController@store')->name('venta.store');
-    Route::get('ventas-ver/{id}', 'VentaController@show')->name('venta.show');
-    Route::delete('ventas-borrar/{id}',  'VentaController@destroy')->name('venta.destroy');
-    Route::patch('ventas-update/{id}', 'VentaController@update')->name('venta.update');
-    Route::post('/solicitarcae', 'VentaController@solicitarcae')->name('solicitarcae');
-    Route::post('/consultacodigo', 'VentaController@consultacodigo')->name('consultacodigo');
-    Route::get('/consultaproducto', 'VentaController@consultaproducto')->name('consultaproducto');
-    Route::get('/consultafactura', 'VentaController@consultafactura')->name('consultafactura');
+    Route::get('ventas', 'VentaController@index')->name('venta.index')->middleware('supervendedor');
+    Route::get('ventas-crear', 'VentaController@create')->name('venta.create')->middleware('supervendedor');
+    Route::get('ventas-tabla', 'VentaController@tabla')->name('venta.tabla')->middleware('supervendedor');
+    Route::get('ventas-ver/{id}', 'VentaController@show')->name('venta.show')->middleware('supervendedor');
+    Route::get('ventas-editar/{id}', 'VentaController@edit')->name('venta.edit')->middleware('supervendedor');
+    Route::get('venta-ticke/{id}', 'VentaController@ticke')->name('venta.ticke')->middleware('supervendedor');
+    Route::post('ventas-store', 'VentaController@store')->name('venta.store')->middleware('supervendedor');
+    Route::get('ventas-ver/{id}', 'VentaController@show')->name('venta.show')->middleware('supervendedor');
+    Route::delete('ventas-borrar/{id}',  'VentaController@destroy')->name('venta.destroy')->middleware('can:Supervisor');
+    Route::patch('ventas-update/{id}', 'VentaController@update')->name('venta.update')->middleware('can:Supervisor');
+    Route::post('/solicitarcae', 'VentaController@solicitarcae')->name('solicitarcae')->middleware('supervendedor');
+    Route::post('/consultacodigo', 'VentaController@consultacodigo')->name('consultacodigo')->middleware('supervendedor');
+    Route::get('/consultaproducto', 'VentaController@consultaproducto')->name('consultaproducto')->middleware('supervendedor');
+    Route::get('/consultafactura', 'VentaController@consultafactura')->name('consultafactura')->middleware('supervendedor');
 
 
 //    INGRESO
-    Route::get('ingreso', 'IngresoController@index' )->name('ingreso.index');
-    Route::get('ingreso-crear', 'IngresoController@create' )->name('ingreso.create');
-    Route::get('ingreso-tabla', 'IngresoController@tabla'  )->name('ingreso.tabla');
-    Route::get('ingreso-ver/{id}','IngresoController@show'  )->name('ingreso.show');
-    Route::get('ingreso-editar/{id}','IngresoController@edit'  )->name('ingreso.edit');
-    Route::post('ingreso-store', 'IngresoController@store' )->name('ingreso.store');
-    Route::patch('ingreso-update/{id}','IngresoController@update'  )->name('ingreso.update');
-    Route::delete('ingreso-borrar/{id}', 'IngresoController@destroy' )->name('ingreso.destroy');
+    Route::get('ingreso', 'IngresoController@index' )->name('ingreso.index')->middleware('can:Supervisor');
+    Route::get('ingreso-crear', 'IngresoController@create' )->name('ingreso.create')->middleware('can:Supervisor');
+    Route::get('ingreso-tabla', 'IngresoController@tabla'  )->name('ingreso.tabla')->middleware('can:Supervisor');
+    Route::get('ingreso-ver/{id}','IngresoController@show'  )->name('ingreso.show')->middleware('can:Supervisor');
+    Route::get('ingreso-editar/{id}','IngresoController@edit'  )->name('ingreso.edit')->middleware('can:Supervisor');
+    Route::post('ingreso-store', 'IngresoController@store' )->name('ingreso.store')->middleware('can:Supervisor');
+    Route::patch('ingreso-update/{id}','IngresoController@update'  )->name('ingreso.update')->middleware('can:Supervisor');
+    Route::delete('ingreso-borrar/{id}', 'IngresoController@destroy' )->name('ingreso.destroy')->middleware('can:Supervisor');
 
 
 //    DEVOLUCION
-    Route::get('devolucion-inicio', 'DevolucionController@index')->name('devolucion.index');
-    Route::get('devolucion-tabla', 'DevolucionController@tabla')->name('devolucion.tabla');
-    Route::get('devolucion-ver/{id}', 'DevolucionController@show')->name('devolucion.show');
-    Route::post('devolucion/store', 'DevolucionController@store')->name('devolucion.store');
+    Route::get('devolucion-inicio', 'DevolucionController@index')->name('devolucion.index')->middleware('supervendedor');
+    Route::get('devolucion-tabla', 'DevolucionController@tabla')->name('devolucion.tabla')->middleware('supervendedor');
+    Route::get('devolucion-ver/{id}', 'DevolucionController@show')->name('devolucion.show')->middleware('supervendedor');
+    Route::post('devolucion/store', 'DevolucionController@store')->name('devolucion.store')->middleware('supervendedor');
 
 
 //    ARQUEO
-    Route::get('/arqueo', 'ArqueController@index')->name('arqueo.index');
-    Route::get('/arqueo/tabla', 'ArqueController@tabla')->name('arqueo.tabla');
-    Route::get('/arqueo/detalle/{id}', 'ArqueController@show')->name('arqueo.show');
-    Route::get('/arqueo/tabla/{id}', 'ArqueController@tablashow')->name('arqueo.show.tabla');
-    Route::put('/arqueo/update/{id}', 'ArqueController@update')->name('arqueo.update');
-    Route::post('/arqueo/store', 'ArqueController@store')->name('arqueo.store');
-    Route::post('/arqueo/detalle/store', 'ArqueController@storeshow')->name('arqueo.store.show');
-    Route::get('/arqueo/pagos/{id}', 'ArqueController@pagos')->name('arqueo.pago.show');
-    Route::get('/arqueo/tabla-pago/{id}', 'ArqueController@tablapago')->name('arqueo.pago.tabla');
+    Route::get('/arqueo', 'ArqueController@index')->name('arqueo.index')->middleware('supervendedor');
+    Route::get('/arqueo/tabla', 'ArqueController@tabla')->name('arqueo.tabla')->middleware('supervendedor');
+    Route::get('/arqueo/detalle/{id}', 'ArqueController@show')->name('arqueo.show')->middleware('supervendedor');
+    Route::get('/arqueo/tabla/{id}', 'ArqueController@tablashow')->name('arqueo.show.tabla')->middleware('supervendedor');
+    Route::put('/arqueo/update/{id}', 'ArqueController@update')->name('arqueo.update')->middleware('supervendedor');
+    Route::post('/arqueo/store', 'ArqueController@store')->name('arqueo.store')->middleware('supervendedor');
+    Route::post('/arqueo/detalle/store', 'ArqueController@storeshow')->name('arqueo.store.show')->middleware('supervendedor');
+    Route::get('/arqueo/pagos/{id}', 'ArqueController@pagos')->name('arqueo.pago.show')->middleware('supervendedor');
+    Route::get('/arqueo/tabla-pago/{id}', 'ArqueController@tablapago')->name('arqueo.pago.tabla')->middleware('supervendedor');
 
 //    CONFIGURACION
-    Route::get('configuracion', 'ConfigController@index')->name('configuracion');
-    Route::post('config/create', 'ConfigController@create')->name('config.create');
-    Route::get('config/{id}/editar', 'ConfigController@edit')->name('configuracion.editar');
-    Route::patch('config/{id}', 'ConfigController@update')->name('configuracion.update');
+    Route::get('configuracion', 'ConfigController@index')->name('configuracion')->middleware('can:Supervisor');
+    Route::post('config/create', 'ConfigController@create')->name('config.create')->middleware('can:Supervisor');
+    Route::get('config/{id}/editar', 'ConfigController@edit')->name('configuracion.editar')->middleware('can:Supervisor');
+    Route::patch('config/{id}', 'ConfigController@update')->name('configuracion.update')->middleware('can:Supervisor');
 
 
 //    USUARIOS
-    Route::get('/usuarios', 'UsuarioController@index')->name('usuarios.index');
-    Route::get('/usuarios/tabla', 'UsuarioController@tabla')->name('usuarios.tabla');
-    Route::post('/usuarios/store', 'UsuarioController@store')->name('usuarios.store');
-    Route::put('/usuarios/update/{id}', 'UsuarioController@update')->name('usuarios.update');
-    Route::put('/usuarios/delete/{id}', 'UsuarioController@delete')->name('usuarios.delete');
+    Route::get('/usuarios', 'UsuarioController@index')->name('usuarios.index')->middleware('can:Superadmin');
+    Route::get('/usuarios/tabla', 'UsuarioController@tabla')->name('usuarios.tabla')->middleware('can:Superadmin');
+    Route::post('/usuarios/store', 'UsuarioController@store')->name('usuarios.store')->middleware('can:Superadmin');
+    Route::put('/usuarios/update/{id}', 'UsuarioController@update')->name('usuarios.update')->middleware('can:Superadmin');
+    Route::put('/usuarios/delete/{id}', 'UsuarioController@delete')->name('usuarios.delete')->middleware('can:Superadmin');
 
 
     //    CUENTA CORRIENTE
-    Route::get('cuenta-corriente-inicio', 'CuentaCorrienteController@index')->name('corriente.index');
-    Route::get('cuenta-corriente-tabla', 'CuentaCorrienteController@tabla')->name('corriente.tabla');
-    Route::get('cuenta-corriente-ver/{id}', 'CuentaCorrienteController@show')->name('corriente.show');
-    Route::post('corriente/update/{id}', 'CuentaCorrienteController@update')->name('corriente.update');
+    Route::get('cuenta-corriente-inicio', 'CuentaCorrienteController@index')->name('corriente.index')->middleware('can:Supervisor');
+    Route::get('cuenta-corriente-tabla', 'CuentaCorrienteController@tabla')->name('corriente.tabla')->middleware('can:Supervisor');
+    Route::get('cuenta-corriente-ver/{id}', 'CuentaCorrienteController@show')->name('corriente.show')->middleware('can:Supervisor');
+    Route::post('corriente/update/{id}', 'CuentaCorrienteController@update')->name('corriente.update')->middleware('can:Supervisor');
 
 
 
