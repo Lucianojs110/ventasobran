@@ -12,7 +12,7 @@
     </style>
 @stop
 @section('content')
-    @canany(['Supervisor'])
+    @canany(['Supervisor', 'Superadmin'])
     <div class="box box-warning">
         <div class="box-header with-border">
             <h3 class="box-title">Acceso Directos o Atajos</h3>

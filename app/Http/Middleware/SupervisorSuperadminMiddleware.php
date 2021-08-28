@@ -4,7 +4,7 @@ namespace SisVentaNew\Http\Middleware;
 
 use Closure;
 
-class SupervisorVendedorMiddleware
+class SupervisorSuperadminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,7 +15,7 @@ class SupervisorVendedorMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->user()->hasRole('Supervisor') or auth()->user()->hasRole('Vendedor') or auth()->user()->hasRole('Superadmin')){
+        if(auth()->user()->hasRole('Supervisor') || auth()->user()->hasRole('Superadmin')){
             return $next($request);
         }
 

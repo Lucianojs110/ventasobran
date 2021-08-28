@@ -265,6 +265,7 @@
                                             <span>Clientes</span>
                                         </a>
                                     </li>
+                                    @canany(['Supervisor', 'Superadmin'])
                                     <li class="header"></li>
                                     <li class="treeview {{(Request::route()->getName() == 'proveedor.index') ? 'active' :  '' }} ">
                                         <a href="{{ route('proveedor.index') }}">
@@ -272,6 +273,7 @@
                                             <span>Proveedor</span>
                                         </a>
                                     </li>
+                                    @endcanany
                                     <li class="header"></li>
                                     <li class="treeview {{(Request::route()->getName() == 'corriente.index') ? 'active' :  '' }} ">
                                         <a href="{{ route('corriente.index') }}">
@@ -286,6 +288,7 @@
                                             <span>Ventas</span>
                                         </a>
                                     </li>
+                                    @canany(['Supervisor', 'Superadmin'])
                                     <li class="header"></li>
                                     <li class="treeview {{(Request::route()->getName() == 'ingreso.index') ? 'active' :  '' }} ">
                                         <a href="{{ route('ingreso.index') }}">
@@ -293,6 +296,7 @@
                                             <span>Compras</span>
                                         </a>
                                     </li>
+                                    @endcanany
                                     <li class="header"></li>
                                     <li class="treeview {{(Request::route()->getName() == 'devolucion.index') ? 'active' :  '' }} ">
                                         <a href="{{ route('devolucion.index') }}">
@@ -300,6 +304,7 @@
                                             <span>Devolución</span>
                                         </a>
                                     </li>
+                                    @can('Superadmin')
                                     <li class="header"></li>
                                     <li class="treeview {{(Request::route()->getName() == 'usuarios.index') ? 'active' :  '' }} ">
                                         <a href="{{ route('usuarios.index') }}">
@@ -307,6 +312,7 @@
                                             <span>Usuarios del Sistema</span>
                                         </a>
                                     </li>
+                                    @endcan
                                     <li class="header"></li>
                                 @endif
                             </ul>

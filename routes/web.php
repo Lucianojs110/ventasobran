@@ -31,35 +31,35 @@ Route::group(['middleware' => 'auth'], function () {
 //    ARTICULO
     Route::get('/articulo', 'ArticuloController@index')->name('articulo.index')->middleware('supervendedor');
     Route::get('/articulo-tabla', 'ArticuloController@tabla')->name('articulo.tabla')->middleware('supervendedor');
-    Route::post('articulo-store', 'ArticuloController@store')->name('articulo.store')->middleware('can:Supervisor');
-    Route::patch('articulo-update/{id}', 'ArticuloController@update')->name('articulo.update')->middleware('can:Supervisor');
-    Route::delete('articulo-delete/{id}', 'ArticuloController@destroy')->name('articulo.destroy')->middleware('can:Supervisor');
-    Route::put('articulo-cambiar/{id}', 'ArticuloController@cambiar')->name('cambiar.precio')->middleware('can:Supervisor');
-    Route::post('actualizarprecios', 'ArticuloController@actualizarprecios')->name('actualizarprecios')->middleware('can:Supervisor');
+    Route::post('articulo-store', 'ArticuloController@store')->name('articulo.store')->middleware('superv.admin');
+    Route::patch('articulo-update/{id}', 'ArticuloController@update')->name('articulo.update')->middleware('superv.admin');
+    Route::delete('articulo-delete/{id}', 'ArticuloController@destroy')->name('articulo.destroy')->middleware('superv.admin');
+    Route::put('articulo-cambiar/{id}', 'ArticuloController@cambiar')->name('cambiar.precio')->middleware('superv.admin');
+    Route::post('actualizarprecios', 'ArticuloController@actualizarprecios')->name('actualizarprecios')->middleware('superv.admin');
 
 
 //    CATEGORIA
-    Route::get('/categoria', 'CategoriaController@index')->name('categoria.index')->middleware('can:Supervisor');
-    Route::get('/categoria-tabla', 'CategoriaController@tabla')->name('categoria.tabla')->middleware('can:Supervisor');
-    Route::post('categoria-store', 'CategoriaController@store')->name('categoria.store')->middleware('can:Supervisor');
-    Route::patch('categoria-update/{id}', 'CategoriaController@update')->name('categoria.update')->middleware('can:Supervisor');
-    Route::delete('categoria-delete/{id}', 'CategoriaController@destroy')->name('categoria.destroy')->middleware('can:Supervisor');
+    Route::get('/categoria', 'CategoriaController@index')->name('categoria.index')->middleware('supervendedor');
+    Route::get('/categoria-tabla', 'CategoriaController@tabla')->name('categoria.tabla')->middleware('supervendedor');
+    Route::post('categoria-store', 'CategoriaController@store')->name('categoria.store')->middleware('supervendedor');
+    Route::patch('categoria-update/{id}', 'CategoriaController@update')->name('categoria.update')->middleware('supervendedor');
+    Route::delete('categoria-delete/{id}', 'CategoriaController@destroy')->name('categoria.destroy')->middleware('supervendedor');
 
 
 //    CLIENTES
-    Route::get('/cliente', 'ClienteController@index')->name('cliente.index')->middleware('can:Supervisor');
-    Route::get('/cliente-tabla', 'ClienteController@tabla')->name('cliente.tabla')->middleware('can:Supervisor');
-    Route::post('cliente-store', 'ClienteController@store')->name('cliente.store')->middleware('can:Supervisor');
-    Route::patch('cliente-update/{id}', 'ClienteController@update')->name('cliente.update')->middleware('can:Supervisor');
-    Route::delete('cliente-delete/{id}', 'ClienteController@destroy')->name('cliente.destroy')->middleware('can:Supervisor');
-    Route::post('consultarcuit', 'ClienteController@consultarcuit')->name('consultarcuit')->middleware('can:Supervisor');
+    Route::get('/cliente', 'ClienteController@index')->name('cliente.index')->middleware('supervendedor');
+    Route::get('/cliente-tabla', 'ClienteController@tabla')->name('cliente.tabla')->middleware('supervendedor');
+    Route::post('cliente-store', 'ClienteController@store')->name('cliente.store')->middleware('superv.admin');
+    Route::patch('cliente-update/{id}', 'ClienteController@update')->name('cliente.update')->middleware('superv.admin');
+    Route::delete('cliente-delete/{id}', 'ClienteController@destroy')->name('cliente.destroy')->middleware('superv.admin');
+    Route::post('consultarcuit', 'ClienteController@consultarcuit')->name('consultarcuit')->middleware('superv.admin');
 
 //    PROVEEDORES
-    Route::get('/proveedor', 'ProveedorController@index')->name('proveedor.index')->middleware('can:Supervisor');
-    Route::get('/proveedor-tabla', 'ProveedorController@tabla')->name('proveedor.tabla')->middleware('can:Supervisor');
-    Route::post('proveedor-store', 'ProveedorController@store')->name('proveedor.store')->middleware('can:Supervisor');
-    Route::patch('proveedor-update/{id}', 'ProveedorController@update')->name('proveedor.update')->middleware('can:Supervisor');
-    Route::delete('proveedor-delete/{id}', 'ProveedorController@destroy')->name('proveedor.destroy')->middleware('can:Supervisor');
+    Route::get('/proveedor', 'ProveedorController@index')->name('proveedor.index')->middleware('superv.admin');
+    Route::get('/proveedor-tabla', 'ProveedorController@tabla')->name('proveedor.tabla')->middleware('superv.admin');
+    Route::post('proveedor-store', 'ProveedorController@store')->name('proveedor.store')->middleware('superv.admin');
+    Route::patch('proveedor-update/{id}', 'ProveedorController@update')->name('proveedor.update')->middleware('superv.admin');
+    Route::delete('proveedor-delete/{id}', 'ProveedorController@destroy')->name('proveedor.destroy')->middleware('superv.admin');
 
 //    VENTA
     Route::get('ventas', 'VentaController@index')->name('venta.index')->middleware('supervendedor');
@@ -70,8 +70,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('venta-ticke/{id}', 'VentaController@ticke')->name('venta.ticke')->middleware('supervendedor');
     Route::post('ventas-store', 'VentaController@store')->name('venta.store')->middleware('supervendedor');
     Route::get('ventas-ver/{id}', 'VentaController@show')->name('venta.show')->middleware('supervendedor');
-    Route::delete('ventas-borrar/{id}',  'VentaController@destroy')->name('venta.destroy')->middleware('can:Supervisor');
-    Route::patch('ventas-update/{id}', 'VentaController@update')->name('venta.update')->middleware('can:Supervisor');
+    Route::delete('ventas-borrar/{id}',  'VentaController@destroy')->name('venta.destroy')->middleware('superv.admin');
+    Route::patch('ventas-update/{id}', 'VentaController@update')->name('venta.update')->middleware('superv.admin');
     Route::post('/solicitarcae', 'VentaController@solicitarcae')->name('solicitarcae')->middleware('supervendedor');
     Route::post('/consultacodigo', 'VentaController@consultacodigo')->name('consultacodigo')->middleware('supervendedor');
     Route::get('/consultaproducto', 'VentaController@consultaproducto')->name('consultaproducto')->middleware('supervendedor');
@@ -79,14 +79,14 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 //    INGRESO
-    Route::get('ingreso', 'IngresoController@index' )->name('ingreso.index')->middleware('can:Supervisor');
-    Route::get('ingreso-crear', 'IngresoController@create' )->name('ingreso.create')->middleware('can:Supervisor');
-    Route::get('ingreso-tabla', 'IngresoController@tabla'  )->name('ingreso.tabla')->middleware('can:Supervisor');
-    Route::get('ingreso-ver/{id}','IngresoController@show'  )->name('ingreso.show')->middleware('can:Supervisor');
-    Route::get('ingreso-editar/{id}','IngresoController@edit'  )->name('ingreso.edit')->middleware('can:Supervisor');
-    Route::post('ingreso-store', 'IngresoController@store' )->name('ingreso.store')->middleware('can:Supervisor');
-    Route::patch('ingreso-update/{id}','IngresoController@update'  )->name('ingreso.update')->middleware('can:Supervisor');
-    Route::delete('ingreso-borrar/{id}', 'IngresoController@destroy' )->name('ingreso.destroy')->middleware('can:Supervisor');
+    Route::get('ingreso', 'IngresoController@index' )->name('ingreso.index')->middleware('superv.admin');
+    Route::get('ingreso-crear', 'IngresoController@create' )->name('ingreso.create')->middleware('superv.admin');
+    Route::get('ingreso-tabla', 'IngresoController@tabla'  )->name('ingreso.tabla')->middleware('superv.admin');
+    Route::get('ingreso-ver/{id}','IngresoController@show'  )->name('ingreso.show')->middleware('superv.admin');
+    Route::get('ingreso-editar/{id}','IngresoController@edit'  )->name('ingreso.edit')->middleware('superv.admin');
+    Route::post('ingreso-store', 'IngresoController@store' )->name('ingreso.store')->middleware('superv.admin');
+    Route::patch('ingreso-update/{id}','IngresoController@update'  )->name('ingreso.update')->middleware('superv.admin');
+    Route::delete('ingreso-borrar/{id}', 'IngresoController@destroy' )->name('ingreso.destroy')->middleware('superv.admin');
 
 
 //    DEVOLUCION
@@ -108,10 +108,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/arqueo/tabla-pago/{id}', 'ArqueController@tablapago')->name('arqueo.pago.tabla')->middleware('supervendedor');
 
 //    CONFIGURACION
-    Route::get('configuracion', 'ConfigController@index')->name('configuracion')->middleware('can:Supervisor');
-    Route::post('config/create', 'ConfigController@create')->name('config.create')->middleware('can:Supervisor');
-    Route::get('config/{id}/editar', 'ConfigController@edit')->name('configuracion.editar')->middleware('can:Supervisor');
-    Route::patch('config/{id}', 'ConfigController@update')->name('configuracion.update')->middleware('can:Supervisor');
+    Route::get('configuracion', 'ConfigController@index')->name('configuracion')->middleware('superv.admin');
+    Route::post('config/create', 'ConfigController@create')->name('config.create')->middleware('superv.admin');
+    Route::get('config/{id}/editar', 'ConfigController@edit')->name('configuracion.editar')->middleware('superv.admin');
+    Route::patch('config/{id}', 'ConfigController@update')->name('configuracion.update')->middleware('superv.admin');
 
 
 //    USUARIOS
@@ -123,10 +123,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     //    CUENTA CORRIENTE
-    Route::get('cuenta-corriente-inicio', 'CuentaCorrienteController@index')->name('corriente.index')->middleware('can:Supervisor');
-    Route::get('cuenta-corriente-tabla', 'CuentaCorrienteController@tabla')->name('corriente.tabla')->middleware('can:Supervisor');
-    Route::get('cuenta-corriente-ver/{id}', 'CuentaCorrienteController@show')->name('corriente.show')->middleware('can:Supervisor');
-    Route::post('corriente/update/{id}', 'CuentaCorrienteController@update')->name('corriente.update')->middleware('can:Supervisor');
+    Route::get('cuenta-corriente-inicio', 'CuentaCorrienteController@index')->name('corriente.index')->middleware('supervendedor');
+    Route::get('cuenta-corriente-tabla', 'CuentaCorrienteController@tabla')->name('corriente.tabla')->middleware('supervendedor');
+    Route::get('cuenta-corriente-ver/{id}', 'CuentaCorrienteController@show')->name('corriente.show')->middleware('superv.admin');
+    Route::post('corriente/update/{id}', 'CuentaCorrienteController@update')->name('corriente.update')->middleware('superv.admin');
 
 
 
