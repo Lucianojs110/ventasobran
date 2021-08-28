@@ -52,6 +52,11 @@ class DevolucionController extends Controller
         $venta = Venta::where('idventa','=',$request->idventa)->get();
         foreach($venta as $ventas){
             $total_venta = $ventas->total_venta;
+            $efectivo = $ventas->paga;
+            $credito = $ventas->tarjeta_credito;
+            $credito_interes = $ventas->monto_porcentaje;
+            $debito = $ventas->tarjeta_debito;
+            $idventa = $ventas->idventa;
         }
         
        
@@ -62,12 +67,12 @@ class DevolucionController extends Controller
        
         $pago = New ArqueoPago();
         $pago->idarqueo = $arqueo->idarqueo;
-        $pago->idventa = 0;
+        $pago->idventa = $idventa;
         $pago->idingreso = 0;
         $pago->tipo_pago = 'Devolucion'; 
-        $pago->pago_efectivo = -1*$total_venta;
-        $pago->pago_debito = 0;
-        $pago->pago_credito = 0;
+        $pago->pago_efectivo = -1*$efectivo;
+        $pago->pago_debito = -1*$debito;
+        $pago->pago_credito = -1*($credito+$credito_interes);
         $pago->monto = -1*$total_venta;
         $pago->save();
 

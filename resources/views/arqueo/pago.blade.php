@@ -41,7 +41,7 @@
                         <!-- small box -->
                         <div class="small-box bg-aqua">
                             <div class="inner">
-                            <h3>$ {{$arqueode->sum('pago_efectivo')+$devolucion->sum('monto')}}</h3>
+                            <h3>$ {{$arqueode->sum('pago_efectivo')+$devolucion->sum('pago_efectivo')}}</h3>
                             <p>Ventas Contado</p>
                             </div>
                             <div class="icon">
@@ -78,7 +78,7 @@
                         <!-- small box -->
                         <div class="small-box bg-aqua">
                             <div class="inner">
-                                <h3>$ {{$arqueode->sum('pago_credito')}} </h3>
+                                <h3>$ {{$arqueode->sum('pago_credito') +$devolucion->sum('pago_credito')}}</h3>
                                 <p>Tarjeta de credito</p>
                             </div>
                             <div class="icon">
@@ -90,7 +90,7 @@
                         <!-- small box -->
                         <div class="small-box bg-aqua">
                             <div class="inner">
-                                <h3>$ {{$arqueode->sum('pago_debito')}} </h3>
+                                <h3>$ {{$arqueode->sum('pago_debito')+$devolucion->sum('pago_debito')}} </h3>
                                 <p>Tarjeta debito</p>
                             </div>
                             <div class="icon">
