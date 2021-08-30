@@ -93,9 +93,9 @@ class SucursalController extends Controller
         if(auth()->user()->hasRole('Supervisor')){
             $suc = Sucursal::find($id);
             $suc->estado = 'Desactivo';
-            $users->save();
+            $suc->save();
 
-            toastr()->error('Sucursal eliminada correctamente!', ''.$users->name);
+            toastr()->error('Sucursal eliminada correctamente!', ''.$suc->name);
             return Redirect::back();
         }else{
             toastr()->error('No tiene permisos para realizar tal accion',);
