@@ -128,7 +128,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('cuenta-corriente-ver/{id}', 'CuentaCorrienteController@show')->name('corriente.show')->middleware('superv.admin');
     Route::post('corriente/update/{id}', 'CuentaCorrienteController@update')->name('corriente.update')->middleware('superv.admin');
 
-
+    // SUCURSALES
+    Route::get('/sucursales', 'SucursalController@index')->name('sucursal.index')->middleware('superv.admin');
+    Route::get('/sucursales/tabla', 'SucursalController@tabla')->name('sucursal.tabla')->middleware('superv.admin');
+    Route::post('/sucursales/store', 'SucursalController@store')->name('sucursal.store')->middleware('superv.admin');
+    Route::put('/sucursales/delete/{id}', 'SucursalController@delete')->name('sucursal.delete')->middleware('superv.admin');
+    Route::put('/sucursales/update/{id}', 'SucursalController@update')->name('sucursal.update')->middleware('superv.admin');
 
 
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@avisos']);

@@ -313,6 +313,15 @@
                                         </a>
                                     </li>
                                     @endcan
+                                    @canany(['Superadmin', 'Supervisor'])
+                                    <li class="header"></li>
+                                    <li class="treeview {{(Request::route()->getName() == 'sucursal.index') ? 'active' :  '' }} ">
+                                        <a href="{{ route('sucursal.index') }}">
+                                            <i class="fa fa-building"></i>
+                                            <span>Sucursales</span>
+                                        </a>
+                                    </li>
+                                    @endcanany
                                     <li class="header"></li>
                                 @endif
                             </ul>
