@@ -14,6 +14,7 @@ use SisVentaNew\Http\Requests\UsuarioFormRequest;
 
 
 use SisVentaNew\User;
+use SisVentaNew\Sucursal;
 use Yajra\DataTables\Facades\DataTables;
 
 class UsuarioController extends Controller
@@ -29,8 +30,9 @@ class UsuarioController extends Controller
 
         $roles = DB::table('roles')->select('id', 'name')->get();
         $user_roles = DB::table('rols_user')->select('id', 'user_id', 'role_id')->get();
-        return view('usuarios.index', compact(['user', 'roles', 'user_roles']));
+        $sucursales = Sucursal::where('estado', 'Activo')->get();
 
+        return view('usuarios.index', compact(['user', 'roles', 'user_roles', 'sucursales']));
     }
 
     public function tabla()
@@ -62,47 +64,40 @@ class UsuarioController extends Controller
             toastr()->error('Error, email ya existente',);
             return Redirect::back();
         }
-        if(auth()->user()->hasRole('Superadmin')){
 
-            $user = New User();
-            $user->name = $request->name;
-            $user->apellido = $request->apellido;
-            $user->estado = 'Activo';
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
-            $user->save();
-            
-            DB::table('rols_user')->insert(['user_id' => $user->id, 'role_id' => $request->rol]);
-                
-        }else{
-            toastr()->error('No tiene permisos para realizar ésta acción',);
-            return Redirect::back();
+        $user = New User();
+        $user->name = $request->name;
+        $user->apellido = $request->apellido;
+        $user->estado = 'Activo';
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->save();
+        
+        DB::table('rols_user')->insert(['user_id' => $user->id, 'role_id' => $request->rol]);
+
+        foreach($request->suc as $suc){
+            DB::table('sucursals_users')->insert(['user_id' => $user->id, 'sucursal_id' => $suc]);
         }
 
-        toastr()->success('Su usuario se ha agregado correctamente!', ''.$request->name);
+        toastr()->success('Usuario agregado correctamente!', ''.$request->name);
         return Redirect::back();
     }
 
     public function update(Request $request, $id)
     {
-        if(auth()->user()->hasRole('Superadmin')){
-            $user = User::find($id);
-            $user->name = $request->name;
-            $user->email = $request->email;
-            if ($request->password != null)
-            {
-                $user->password = Hash::make($request->password);
-            }
-            $user->save();
-           
-            DB::table('rols_user')->where('user_id', $id)->update(['role_id' => $request->rol]);
-                    
-            toastr()->info('Su usuario se ha editado correctamente!', ''.$request->name);
-            return Redirect::back();
-        }else{
-            toastr()->error('No tiene permisos para realizar tal accion',);
-            return Redirect::back();
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if ($request->password != null)
+        {
+            $user->password = Hash::make($request->password);
         }
+        $user->save();
+        
+        DB::table('rols_user')->where('user_id', $id)->update(['role_id' => $request->rol]);
+                
+        toastr()->info('Su usuario se ha editado correctamente!', ''.$request->name);
+        return Redirect::back();
         
     }
 
@@ -113,6 +108,8 @@ class UsuarioController extends Controller
         $users->save();
 
         DB::table('rols_user')->where('user_id', $id)->delete();
+
+        DB::table('sucursals_user')->where('user_id', $id)->delete();
 
         toastr()->error('Su usuario se ha borrado correctamente!', ''.$users->name);
         return Redirect::back();

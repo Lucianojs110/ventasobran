@@ -36,9 +36,16 @@
                                 <option value="{{$rols->id}}">{{$rols->name}}</option>
                             @endforeach
                         </select>
-
                     </div>
-                    
+                    <div class="py-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <label class="text-gray-700" for="rol">
+                        Sucursales:
+                        <select class="selectpicker" multiple name="suc[]">
+                            @foreach($sucursales as $sucursal)
+                                <option value="{{$sucursal->id}}">{{$sucursal->nombre}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 {!!Form::close()!!}
             </div>

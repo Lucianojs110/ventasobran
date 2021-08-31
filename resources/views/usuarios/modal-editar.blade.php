@@ -33,7 +33,6 @@
                     <label class="text-gray-700" for="rol">
                         Rol:
                         <select name="rol" class="form-control">
-                            
                             @foreach($user_roles as $usrol)
                                 @if($usrol->user_id == $use->id)
 
@@ -44,14 +43,20 @@
                                             <option value="{{$rols->id}}"> {{$rols->name}} </option>
                                         @endif
                                     @endforeach
-
                                 @endif
-
                             @endforeach
-                            
-                            
                         </select>
 
+                    </div>
+
+                    <div class="py-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <label class="text-gray-700" for="rol">
+                        Sucursales:
+                        <select class="selectpicker" multiple name="suc[]">
+                            @foreach($sucursales as $sucursal)
+                                <option value="{{$sucursal->id}}">{{$sucursal->nombre}}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                 </div>
