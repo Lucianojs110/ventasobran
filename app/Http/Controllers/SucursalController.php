@@ -42,24 +42,19 @@ class SucursalController extends Controller
             toastr()->error('Error, sucursal(email) ya existente',);
             return Redirect::back();
         }
-        if(auth()->user()->hasRole('Supervisor')){
-            $suc = new Sucursal();
-            $suc->nombre = $request->nombre;
-            $suc->direccion = $request->direccion;
-            $suc->ciudad = $request->ciudad;
-            $suc->cuit = $request->cuit;
-            $suc->ingresos_brutos = $request->ingresos_brutos;
-            $suc->telefono = $request->telefono;
-            $suc->email = $request->email;
-            $suc->impuesto = $request->impuesto;
 
-            $suc->save();
-        }
-        else{
-            toastr()->error('No tiene permisos para realizar ésta acción',);
-            return Redirect::back();
-        }
+        $suc = new Sucursal();
+        $suc->nombre = $request->nombre;
+        $suc->direccion = $request->direccion;
+        $suc->ciudad = $request->ciudad;
+        $suc->cuit = $request->cuit;
+        $suc->ingresos_brutos = $request->ingresos_brutos;
+        $suc->telefono = $request->telefono;
+        $suc->email = $request->email;
+        $suc->impuesto = $request->impuesto;
 
+        $suc->save();
+        
         toastr()->success('Sucursal agregada correctamente!', ''.$request->name);
         return Redirect::back();
     }

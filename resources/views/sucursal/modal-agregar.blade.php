@@ -38,9 +38,15 @@
                         <label for="">Email</label>
                         <input required type="text" name="email" class="form-control">
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <label for="">Impuesto</label>
-                        <input required type="text" name="impuesto" class="form-control">
+                    <div class="py-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        
+                        <label for="">Condicion frente al Iva</label>
+                        <select name="impuesto" class="form-control">
+                            
+                            <option selected value="11">Monotributo</option>
+                            <option value="6">Resp. Inscripto</option>
+                            
+                        </select>
                     </div>
                 </div>
                 {!!Form::close()!!}

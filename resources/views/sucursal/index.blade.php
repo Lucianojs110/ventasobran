@@ -30,7 +30,6 @@
                                     <th>Ingresos Brutos</th>
                                     <th>Telefono</th>
                                     <th>Correo</th>
-                                    <th>Impuesto</th>
                                     <th>Opciones</th>
                                 </tr>
                                 </thead>
@@ -61,7 +60,6 @@
                 {data: 'ingresos_brutos', name: 'ingresos brutos'},
                 {data: 'telefono', name: 'telefono'},
                 {data: 'email', name: 'correo'},
-                {data: 'impuesto', name: 'impuesto'},
                 {data: 'opcion', name: 'opcion', orderable: false, searchable: false}
             ],
             "language": {

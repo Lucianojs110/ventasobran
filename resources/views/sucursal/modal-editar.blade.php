@@ -39,9 +39,19 @@
                         <label for="">Correo</label>
                         <input value="{{$sucursal->email}}" required type="email" name="email" class="form-control">
                     </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <label for="">Impuesto</label>
-                        <input value="{{$sucursal->impuesto}}" required type="text" name="impuesto" class="form-control">
+                    <div class="py-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            <label>Condicion frente al Iva</label>
+                            <select name="impuesto" class="form-control">
+                                @if($sucursal->impuesto == '11')
+                                    <option selected value="11">Monotributo</option>
+                                    <option value="6">Resp. Inscripto</option>
+                                @else
+                                    <option value="6">Resp. Inscripto</option>
+                                    <option selected value="11">Monotributo</option>
+                                @endif
+                            </select>
+                        </div>
                     </div>
                 </div>
                 {!!Form::close()!!}
