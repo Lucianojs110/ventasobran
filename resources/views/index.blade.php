@@ -22,6 +22,9 @@
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
             </div>
         </div>
+
+        <h1> se logueo en sucursal  {{session('sucursal')}}</h1>
+
         <div class="box-body">
             <div class="col-lg-3 col-xs-12">
                 <div class="small-box bg-aqua">

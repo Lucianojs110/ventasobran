@@ -11,11 +11,37 @@
             max-height: 150px;
             overflow: auto;
         }
+
+        .loader {
+    display: none;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('{{ asset('imagenes/loading2.gif') }}') 50% 50% no-repeat rgb(249, 249, 249);
+    opacity: .8;
+  }
+
+  .cargando {
+    position: fixed;
+    font-size: 25px;
+    left: 30%;
+    top: 60%;
+    width: 100%;
+    height: 100%;
+    z-index: 9998;
+
+  }
     </style>
 
 @endsection
 @section('content')
 <meta name="csrf-token" content="{{ csrf_token() }}">
+<div class="loader" id="loader">
+  <div class="cargando"><b> Se estan actualizando los registros. aguarde un momento... </b></div>
+</div>
     <section class="content" >
         <div class="box">
             <div class="box-header with-border">
@@ -95,8 +121,7 @@
 
             $('#actualizar-precios').click(function () {
 
-                 
-
+                
                 if ($("#porcentaje").val()>100 || $("#porcentaje").val()<1){
                     alert('ingrese un porcentaje entre 1% y 100%')
                 } else{
@@ -107,12 +132,16 @@
                    type: "POST",
                    url: "{{route('actualizarprecios')}}",
                    dataType: "json",
+                   beforeSend: function () {
+                 document.getElementById("loader").style.display = "block";
+                     },
                    data: {
                        idcategoria: $("#idcategoria-act").val(),   
                        accion: accion, 
                        porcentaje: $("#porcentaje").val() 
                    },
                    success: function(data) {
+                     document.getElementById("loader").style.display = "none";
                      toastr.success('Productos Actualizados correctamente')
                      $("#porcentaje").val('');
                      $('#modal-act-precios').modal('hide');

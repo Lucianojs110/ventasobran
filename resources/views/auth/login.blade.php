@@ -28,6 +28,20 @@
                                 @endif
                             </div>
 
+
+                        <div class="form-group">
+                            <label>Sucursal</label>
+                            <select name="sucursal" class="form-control">
+                                @foreach ($sucursal as $sucursales)
+                                    <option value="{{$sucursales->id}}">{{$sucursales->nombre}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+
+                       
+
                             <div class="has-feedback">
                                   <label>
                                     <input  name="remember" type="checkbox" {{ old('remember') ? 'checked' : '' }}>

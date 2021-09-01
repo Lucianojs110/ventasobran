@@ -414,10 +414,20 @@
                 $('#bt-add').click(function () {
                     agregar();
                 });
+
+                $("#pcodigo").keypress(function(e) {
+                if(e.which == 32) {
+                    
+                    event.preventDefault();
+                        event.target.value += '0';
+
+                 
+                    }
+                 });
                
                 
                 $("#pcodigo").keyup(function(){
-                
+            
                     if ($("#pcodigo").val().length == 13) {
                         consultar_codigo();
                         $( "#pcantidad" ).focus();
