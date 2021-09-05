@@ -50,14 +50,27 @@
                     </div>
 
                     <div class="py-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label class="text-gray-700" for="rol">
+                    <label class="text-gray-700" for="suc">
                         Sucursales:
                         <select class="selectpicker" multiple name="suc[]">
                             @foreach($sucursales as $sucursal)
-                                <option value="{{$sucursal->id}}">{{$sucursal->nombre}}</option>
+                                @foreach($sucursalesUser as $sucursalUser)
+                                    @if($sucursalUser->user_id == $use->id)
+                                        @if($sucursal->id == $sucursalUser->sucursal_id)
+                                            <option selected value="{{$sucursal->id}}"> {{$sucursal->nombre}} </option>
+                                            @break
+                                        @elseif($sucursal->id < $sucursalUser->sucursal_id)
+                                            <option value="{{$sucursal->id}}"> {{$sucursal->nombre}} </option>
+                                            @break
+                                        @endif
+                                    @endif
+                                    
+                                @endforeach
                             @endforeach
+                            
                         </select>
                     </div>
+                    
 
                 </div>
                 {!!Form::close()!!}

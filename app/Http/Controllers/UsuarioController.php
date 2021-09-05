@@ -31,8 +31,9 @@ class UsuarioController extends Controller
         $roles = DB::table('roles')->select('id', 'name')->get();
         $user_roles = DB::table('rols_user')->select('id', 'user_id', 'role_id')->get();
         $sucursales = Sucursal::where('estado', 'Activo')->get();
+        $sucursalesUser = DB::table('sucursals_users')->orderBy('sucursal_id')->get();
 
-        return view('usuarios.index', compact(['user', 'roles', 'user_roles', 'sucursales']));
+        return view('usuarios.index', compact(['user', 'roles', 'user_roles', 'sucursales', 'sucursalesUser']));
     }
 
     public function tabla()
@@ -95,6 +96,12 @@ class UsuarioController extends Controller
         $user->save();
         
         DB::table('rols_user')->where('user_id', $id)->update(['role_id' => $request->rol]);
+
+        DB::table('sucursals_users')->where('user_id', $id)->delete();
+
+        foreach($request->suc as $suc){
+            DB::table('sucursals_users')->insert(['user_id' => $id, 'sucursal_id' => $suc]);
+        }
                 
         toastr()->info('Su usuario se ha editado correctamente!', ''.$request->name);
         return Redirect::back();
