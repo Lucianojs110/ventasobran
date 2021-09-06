@@ -8,6 +8,13 @@
                         <form id="login-form" action="{{ route('login') }}" method="POST" role="form" novalidate="">
                         {{ csrf_field() }}
 
+                        @if(Session::has('message'))
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {{Session::get('message')}}
+                        </div>
+                       @endif
+                        
                             <div class="has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="email">Correo</label>
                                 <input type="email" for="email" class="form-control" name="email" id="email" placeholder="Ingrese su correo " required value="{{ old('email') }}"  >
@@ -38,6 +45,8 @@
                             </select>
                         </div>
                     </div>
+
+               
 
 
                        

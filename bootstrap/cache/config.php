@@ -3,12 +3,12 @@
   array (
     'name' => 'Laravel',
     'env' => 'local',
-    'debug' => true,
+    'debug' => false,
     'url' => 'http://localhost',
     'timezone' => 'America/Argentina/Mendoza',
     'locale' => 'es',
     'fallback_locale' => 'en',
-    'key' => 'base64:ipvMLbym52sQSGI2OSw0ZeDzL7zjSiGTbRaf5l5V2H0=',
+    'key' => 'base64:jKGuo1y3VErm27FHtwzb1BBvZed5TUBB0s30GL31svk=',
     'cipher' => 'AES-256-CBC',
     'log' => 'single',
     'log_level' => 'debug',
@@ -131,7 +131,7 @@
   ),
   'barcode' => 
   array (
-    'store_path' => '/opt/lampp/htdocs/ventasobran/public/',
+    'store_path' => 'C:\\laragon\\www\\sisventaobran\\public\\/',
   ),
   'broadcasting' => 
   array (
@@ -166,7 +166,7 @@
   ),
   'cache' => 
   array (
-    'default' => 'file',
+    'default' => 'array',
     'stores' => 
     array (
       'apc' => 
@@ -186,7 +186,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => '/opt/lampp/htdocs/ventasobran/storage/framework/cache/data',
+        'path' => 'C:\\laragon\\www\\sisventaobran\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -232,7 +232,7 @@
       'mysql' => 
       array (
         'driver' => 'mysql',
-        'host' => '127.0.0.1',
+        'host' => 'localhost',
         'port' => '3306',
         'database' => 'dbventaslaravel',
         'username' => 'root',
@@ -247,7 +247,7 @@
       'pgsql' => 
       array (
         'driver' => 'pgsql',
-        'host' => '127.0.0.1',
+        'host' => 'localhost',
         'port' => '3306',
         'database' => 'dbventaslaravel',
         'username' => 'root',
@@ -277,10 +277,10 @@
     'orientation' => 'portrait',
     'defines' => 
     array (
-      'DOMPDF_FONT_DIR' => '/opt/lampp/htdocs/ventasobran/storage/fonts/',
-      'DOMPDF_FONT_CACHE' => '/opt/lampp/htdocs/ventasobran/storage/fonts/',
-      'DOMPDF_TEMP_DIR' => '/tmp',
-      'DOMPDF_CHROOT' => '/opt/lampp/htdocs/ventasobran',
+      'DOMPDF_FONT_DIR' => 'C:\\laragon\\www\\sisventaobran\\storage\\fonts/',
+      'DOMPDF_FONT_CACHE' => 'C:\\laragon\\www\\sisventaobran\\storage\\fonts/',
+      'DOMPDF_TEMP_DIR' => 'C:\\Users\\luciano\\AppData\\Local\\Temp',
+      'DOMPDF_CHROOT' => 'C:\\laragon\\www\\sisventaobran',
       'DOMPDF_UNICODE_ENABLED' => true,
       'DOMPDF_ENABLE_FONT_SUBSETTING' => false,
       'DOMPDF_PDF_BACKEND' => 'CPDF',
@@ -305,12 +305,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => '/opt/lampp/htdocs/ventasobran/storage/app',
+        'root' => 'C:\\laragon\\www\\sisventaobran\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => '/opt/lampp/htdocs/ventasobran/storage/app/public',
+        'root' => 'C:\\laragon\\www\\sisventaobran\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -458,7 +458,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => '/opt/lampp/htdocs/ventasobran/resources/views/vendor/mail',
+        0 => 'C:\\laragon\\www\\sisventaobran\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -566,7 +566,7 @@
     ),
     'generator' => 
     array (
-      'basePath' => '/opt/lampp/htdocs/ventasobran/app',
+      'basePath' => 'C:\\laragon\\www\\sisventaobran\\app',
       'rootNamespace' => 'App\\',
       'paths' => 
       array (
@@ -579,7 +579,7 @@
         'controllers' => 'Http/Controllers',
         'provider' => 'RepositoryServiceProvider',
         'criteria' => 'Criteria',
-        'stubsOverridePath' => '/opt/lampp/htdocs/ventasobran/app',
+        'stubsOverridePath' => 'C:\\laragon\\www\\sisventaobran\\app',
       ),
     ),
   ),
@@ -613,7 +613,7 @@
     'lifetime' => 600,
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => '/opt/lampp/htdocs/ventasobran/storage/framework/sessions',
+    'files' => 'C:\\laragon\\www\\sisventaobran\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -678,9 +678,9 @@
   array (
     'paths' => 
     array (
-      0 => '/opt/lampp/htdocs/ventasobran/resources/views',
+      0 => 'C:\\laragon\\www\\sisventaobran\\resources\\views',
     ),
-    'compiled' => '/opt/lampp/htdocs/ventasobran/storage/framework/views',
+    'compiled' => 'C:\\laragon\\www\\sisventaobran\\storage\\framework\\views',
   ),
   'datatables' => 
   array (

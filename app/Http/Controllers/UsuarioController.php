@@ -7,12 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Input;
-
 use SisVentaNew\Http\Requests\UsuarioFormRequest;
-
-
 use SisVentaNew\User;
 use SisVentaNew\Sucursal;
 use Yajra\DataTables\Facades\DataTables;
@@ -31,7 +27,7 @@ class UsuarioController extends Controller
         $roles = DB::table('roles')->select('id', 'name')->get();
         $user_roles = DB::table('rols_user')->select('id', 'user_id', 'role_id')->get();
         $sucursales = Sucursal::where('estado', 'Activo')->get();
-        $sucursalesUser = DB::table('sucursals_users')->orderBy('sucursal_id')->get();
+        $sucursalesUser = DB::table('sucursals_users')->orderBy('sucursal_id')->get(); 
 
         return view('usuarios.index', compact(['user', 'roles', 'user_roles', 'sucursales', 'sucursalesUser']));
     }
@@ -119,7 +115,7 @@ class UsuarioController extends Controller
         DB::table('sucursals_user')->where('user_id', $id)->delete();
 
         toastr()->error('Su usuario se ha borrado correctamente!', ''.$users->name);
-        return Redirect::back();
+        return redirect()->route('login');
 
     }
 }

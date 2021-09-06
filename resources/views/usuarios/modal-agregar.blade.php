@@ -1,5 +1,5 @@
-<div class="modal fade modal-success" id="agregar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade modal-success"  id="agregar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" >
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -7,46 +7,51 @@
                 </button>
                 <h5 class="modal-title" id="exampleModalLabel"><i data-toggle="tooltip" title="Agregar Usuarios" class="fa fa-plus-circle"></i> Agregar Usuario</h5>
             </div>
-            <div class="modal-body" style="overflow-y: auto !important;background-color: #ffffff !important;color: black !important;">
+            <div  class="modal-body" style="height: 600px; overflow-y: auto !important;background-color: #ffffff !important;color: black !important;">
                 {!! Form::open(['route' => 'usuarios.store', 'method'=>'POST', 'autocomplete' => 'off', 'files' => 'true','id'=>'agregar_form' , 'enctype'=>'multipart/form-data']) !!}
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <label for="">Nombre</label>
                         <input required type="text" name="name" class="form-control">
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <label for=""> Apellido</label>
                         <input required type="text" name="apellido" class="form-control">
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <label for="">Correo</label>
                         <input required type="email" name="email" class="form-control">
                     </div>
+
                     <input type="hidden" name="estado" value="Activo">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <label for="">Contraseña</label><br>
                         <input type="password" name="password" class="form-control">
                     </div>
 
-                    <div class="py-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label class="text-gray-700" for="rol">
-                        Rol:
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="text-gray-700" for="rol">Rol:</label>
                         <select name="rol" class="form-control">
                             @foreach($roles as $rols)
                                 <option value="{{$rols->id}}">{{$rols->name}}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="py-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label class="text-gray-700" for="rol">
-                        Sucursales:
-                        <select class="selectpicker" multiple name="suc[]">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="text-gray-700" >Sucursales:</label>
+                        <select class="form-control selectpicker" multiple name="suc[]">
                             @foreach($sucursales as $sucursal)
                                 <option value="{{$sucursal->id}}">{{$sucursal->nombre}}</option>
                             @endforeach
                         </select>
                     </div>
+
                 </div>
+
+
                 {!!Form::close()!!}
             </div>
             <div class="modal-footer">

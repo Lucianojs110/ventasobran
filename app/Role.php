@@ -18,7 +18,7 @@ class Role extends EntrustRole implements ValidatingModelInterface
 
   protected $rules = [
     'name'      => 'required|unique:roles',
-    // 'display_name'      => 'required|unique:roles',
+   
   ];
 
 }

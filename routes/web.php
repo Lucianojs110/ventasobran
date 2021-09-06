@@ -120,7 +120,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/usuarios/store', 'UsuarioController@store')->name('usuarios.store')->middleware('can:Superadmin');
     Route::put('/usuarios/update/{id}', 'UsuarioController@update')->name('usuarios.update')->middleware('can:Superadmin');
     Route::put('/usuarios/delete/{id}', 'UsuarioController@delete')->name('usuarios.delete')->middleware('can:Superadmin');
-
+    
 
     //    CUENTA CORRIENTE
     Route::get('cuenta-corriente-inicio', 'CuentaCorrienteController@index')->name('corriente.index')->middleware('supervendedor');
@@ -143,3 +143,4 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Auth::routes();
+Route::get('/permiso', 'Auth\LoginController@permiso')->name('permiso');

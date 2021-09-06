@@ -8,14 +8,14 @@
                 </button>
                 <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-edit"></i> Editar usuario: {{$use->name}}</h5>
             </div>
-            <div style="overflow-y: auto !important;background-color: #ffffff !important;color: black !important;" class="modal-body">
+            <div style="height: 600px; overflow-y: auto !important;background-color: #ffffff !important;color: black !important;" class="modal-body">
                 {!!Form::model($use,['route'=>['usuarios.update', $use->id] , 'id'=>'edit-'.$use->id.'', 'method'=>'put', 'enctype'=>'multipart/form-data'])!!}
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <label for="">Nombre</label>
                         <input  value="{{$use->name}}" type="text" name="name" class="form-control">
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <label for="">Apellido</label>
                         <input required value="{{$use->apellido}}" type="text" name="apellido" class="form-control">
                     </div>
@@ -29,9 +29,8 @@
                         <input type="password" class="form-control" name="password"/>
                     </div>
 
-                    <div class="py-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label class="text-gray-700" for="rol">
-                        Rol:
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="text-gray-700" for="rol">Rol:</label>
                         <select name="rol" class="form-control">
                             @foreach($user_roles as $usrol)
                                 @if($usrol->user_id == $use->id)
@@ -49,25 +48,21 @@
 
                     </div>
 
-                    <div class="py-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label class="text-gray-700" for="suc">
-                        Sucursales:
-                        <select class="selectpicker" multiple name="suc[]">
+                    <?php
+                     $arraysucursal= array();
+                     foreach ($sucursalesUser as $sucursalUser) {
+                        if($sucursalUser->user_id == $use->id ){
+			               array_push($arraysucursal, $sucursalUser->sucursal_id);
+                          }
+		                 }
+                    ?>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="text-gray-700" for="suc">Sucursales:</label>
+                        <select class="form-control selectpicker" multiple name="suc[]">
                             @foreach($sucursales as $sucursal)
-                                @foreach($sucursalesUser as $sucursalUser)
-                                    @if($sucursalUser->user_id == $use->id)
-                                        @if($sucursal->id == $sucursalUser->sucursal_id)
-                                            <option selected value="{{$sucursal->id}}"> {{$sucursal->nombre}} </option>
-                                            @break
-                                        @elseif($sucursal->id < $sucursalUser->sucursal_id)
-                                            <option value="{{$sucursal->id}}"> {{$sucursal->nombre}} </option>
-                                            @break
-                                        @endif
-                                    @endif
-                                    
-                                @endforeach
+                                    <option <?=  in_array($sucursal->id,  $arraysucursal) ? 'SELECTED' : '' ?>  value="{{$sucursal->id}}" > {{$sucursal->nombre}} </option>
                             @endforeach
-                            
                         </select>
                     </div>
                     
