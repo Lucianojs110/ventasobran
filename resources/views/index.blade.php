@@ -12,7 +12,7 @@
     </style>
 @stop
 @section('content')
-    @canany(['Supervisor', 'Superadmin'])
+    @canany(['Supervisor', 'Superadmin', 'Vendedor'])
     <div class="box box-warning">
         <div class="box-header with-border">
             <h3 class="box-title">Acceso Directos o Atajos</h3>
@@ -110,6 +110,8 @@
                     <a href="{{route('corriente.index')}}" class="small-box-footer">Ver Cuentas Corriente <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
+            
+            @canany(['Superadmin'])
             <div class="col-lg-3 col-xs-12">
                 <div class="small-box bg-light-blue">
                     <div class="inner">
@@ -122,6 +124,7 @@
                     <a href="{{route('usuarios.index')}}" class="small-box-footer">Ir a Usuarios <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
+            @endcanany
             
         </div>
     </div>

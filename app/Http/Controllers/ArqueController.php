@@ -15,11 +15,11 @@ class ArqueController extends Controller
 {
     public function index()
     {
-        $arqueo = Arqueo::all();
+        $arqueo = Arqueo::where('id_sucursal',session('sucursal'))->where('id_sucursal',session('sucursal'));
 
         DB::statement("SET lc_time_names = 'es_ES'");
 
-        $resultado = ArqueoPago::where('tipo_pago','Venta')->selectRaw('year(created_at) year, monthname(created_at) monthname, month(created_at) month, sum(pago_efectivo) efectivo, sum(pago_debito) debito, sum(pago_credito) credito, sum(pago_credito+pago_debito+pago_efectivo) data')
+            $resultado = ArqueoPago::where('tipo_pago','Venta')->where('id_sucursal',session('sucursal'))->selectRaw('year(created_at) year, monthname(created_at) monthname, month(created_at) month, sum(pago_efectivo) efectivo, sum(pago_debito) debito, sum(pago_credito) credito, sum(pago_credito+pago_debito+pago_efectivo) data')
             ->groupBy('year', 'month', 'monthname')
             ->orderBy('year', 'desc')
             ->orderBy('month', 'desc')
@@ -43,7 +43,7 @@ class ArqueController extends Controller
 
     public function tabla()
     {
-        $arqueo = Arqueo::all();
+        $arqueo = Arqueo::where('id_sucursal',session('sucursal'))->where('id_sucursal',session('sucursal'));
       
 
         return Datatables::of($arqueo)
@@ -68,7 +68,7 @@ class ArqueController extends Controller
 
     public function show($id)
     {
-        $arqueo = Arqueo::with('detalle')->where('idarqueo', $id)->first();
+        $arqueo = Arqueo::with('detalle')->where('idarqueo', $id)->where('id_sucursal',session('sucursal'))->first();
 
         $efectivo = ArqueoDetalle::where('idarqueo', $id)->where('tipo_pago', 'Efectivo')->get();
         $corriente = ArqueoDetalle::where('idarqueo', $id)->where('tipo_pago', 'Corriente')->get();
@@ -122,6 +122,7 @@ class ArqueController extends Controller
         $arqueo->fecha_hora =  $mytime->toDateTimeString();
         $arqueo->estado = 'Abierto';
         $arqueo->total_dia = $request->cantidad;
+        $arqueo->id_sucursal = session('sucursal'); 
         $arqueo->save();
 
         $det = New ArqueoDetalle();

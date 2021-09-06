@@ -42,7 +42,6 @@ class VentaController extends Controller
     public function create()
     {
         
-
         $config2 = Config::where('idconfig','=',1)->get();
         $personas = Persona::where('tipo_persona', 'Cliente')->get();
 
@@ -132,7 +131,7 @@ class VentaController extends Controller
     public function store(VentasFormRequest $request)
     {
 
-        $val = Arqueo::where('estado', 'Abierto')->first();
+        $val = Arqueo::where('estado', 'Abierto')->where('id_sucursal',session('sucursal'))->first();
         if ($val == null) {
             toastr()->error('Debe iniciar un arqueo, antes de realizar una venta!', 'Atención');
             return Redirect::back();
@@ -196,7 +195,7 @@ class VentaController extends Controller
                     $pago = 'Tarjeta de Credito';
                 }
 
-                $arqueo = Arqueo::where('estado', 'Abierto')->first();
+                $arqueo = Arqueo::where('estado', 'Abierto')->where('id_sucursal',session('sucursal'))->first();
 
               
                 $ar = Arqueo::find($arqueo->idarqueo);
@@ -204,6 +203,7 @@ class VentaController extends Controller
                 $ar->save();
                
                 $pago = New ArqueoPago();
+                $pago->id_sucursal = session('sucursal');
                 $pago->idarqueo = $arqueo->idarqueo;
                 $pago->idventa = 0;
                 $pago->idingreso = 0;
@@ -316,11 +316,12 @@ class VentaController extends Controller
                     $pago = 'Tarjeta de Credito';
                 }
 
-                $arqueo = Arqueo::where('estado', 'Abierto')->first();
+                $arqueo = Arqueo::where('estado', 'Abierto')->where('id_sucursal',session('sucursal'))->first();
 
           
             
                 $pago = New ArqueoPago();
+                $pago->id_sucursal = session('sucursal');
                 $pago->idarqueo = $arqueo->idarqueo;
                 $pago->idventa = 0;
                 $pago->idingreso = 0;
@@ -464,6 +465,7 @@ class VentaController extends Controller
             
 
             $pago = New ArqueoPago();
+            $pago->id_sucursal = session('sucursal');
             $pago->idarqueo = $arqueo->idarqueo;
             $pago->idventa = $venta->idventa;
             $pago->idingreso = 0;

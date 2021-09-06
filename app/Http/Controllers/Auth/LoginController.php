@@ -10,6 +10,8 @@ use SisVentaNew\SucursalUser;
 use SisVentaNew\User;
 use Illuminate\Support\Facades\Redirect;
 Use Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -67,12 +69,17 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         
-    
+        
+     
+
         $usuario=User::where('email',  $request->email)->first();
+        
+
+        $userRole = DB::table('rols_user')->where('user_id', $usuario->id)->first();
+
+        if($userRole!='1'){
 
         $sucursalUser = SucursalUser::where('user_id', $usuario->id)->get();
-
-        //dd($sucursalUser);
 
         $arraysucursal= array();
 
@@ -89,8 +96,9 @@ class LoginController extends Controller
             return redirect()->route('login');
             
         }
-
+    }
     
+
         $this->validateLogin($request);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -115,10 +123,5 @@ class LoginController extends Controller
         return $this->sendFailedLoginResponse($request);
     }
 
-    public function permiso()
-    {
-    
-       
-        return view('auth.permiso');
-    }
+  
 }

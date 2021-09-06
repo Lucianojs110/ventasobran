@@ -136,11 +136,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/sucursales/update/{id}', 'SucursalController@update')->name('sucursal.update')->middleware('superv.admin');
 
 
-    Route::get('/', ['as' => 'home', 'uses' => 'HomeController@avisos']);
+    Route::get('/', ['as' => 'home', 'uses' => 'HomeController@avisos'])->middleware('supervendedor');
 
 
 
 });
 
 Auth::routes();
-Route::get('/permiso', 'Auth\LoginController@permiso')->name('permiso');
+
