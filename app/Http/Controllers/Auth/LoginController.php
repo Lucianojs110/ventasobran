@@ -69,15 +69,14 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         
-        
-     
-
         $usuario=User::where('email',  $request->email)->first();
         
 
         $userRole = DB::table('rols_user')->where('user_id', $usuario->id)->first();
+        
+     
 
-        if($userRole!='1'){
+        if($userRole->role_id!='1'){
 
         $sucursalUser = SucursalUser::where('user_id', $usuario->id)->get();
 
