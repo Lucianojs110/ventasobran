@@ -26,14 +26,14 @@ class CategoriaController extends Controller
 
     public function index(Request $request)
     {
-        $categorias = Categoria::where('condicion',1)->get();
+        $categorias = Categoria::where('condicion',1)->where('id_sucursal', session('sucursal'))->get();
 
         return view('almacen.categoria.indexx', compact('categorias'));
     }
 
     public function tabla ()
     {
-        $categorias = Categoria::where('condicion',1)->get();
+        $categorias = Categoria::where('condicion',1)->where('id_sucursal', session('sucursal'))->get();
 
         return Datatables::of($categorias)
             ->addColumn('opcion', function ($ar) {
@@ -59,6 +59,7 @@ class CategoriaController extends Controller
         $categoria->nombre = $request->get('nombre');
         $categoria->descripcion = $request->get('descripcion');
         $categoria->condicion = '1';
+        $categoria->id_sucursal = session('sucursal');
         $categoria->save();
 
         toastr()->success('Su categoría fue creada correcatamente', ''.  $request->nombre);

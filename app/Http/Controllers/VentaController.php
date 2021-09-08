@@ -35,7 +35,7 @@ class VentaController extends Controller
 
     public function index(Request $request)
     {
-        $ventas = Venta::with('detalles', 'cliente')->orderBy('idventa', 'desc')->get();
+        $ventas = Venta::with('detalles', 'cliente')->where('id_sucursal', session('sucursal'))->orderBy('idventa', 'desc')->get();
         return view('ventas.venta.indexx', compact('ventas'));
     }
 
@@ -43,11 +43,12 @@ class VentaController extends Controller
     {
         
         $config2 = Config::where('idconfig','=',1)->get();
-        $personas = Persona::where('tipo_persona', 'Cliente')->get();
+        $personas = Persona::where('tipo_persona', 'Cliente')->where('id_sucursal', session('sucursal'))->get();
 
         $articulos = Articulo::with('detalleIngresos')
             ->where('estado', 'Activo')
             ->where('stock', '>', '0')
+            ->where('id_sucursal', session('sucursal'))
             ->select(DB::raw('CONCAT(articulo.codigo, " ",articulo.nombre) AS articulo'), 'articulo.idarticulo', 'articulo.stock',
                 DB::raw('(SELECT precio_venta From detalle_ingreso Where idarticulo = articulo.idarticulo order by iddetalle_ingreso desc limit 0,1)
                  as precio_promedio'))
@@ -69,7 +70,7 @@ class VentaController extends Controller
     public function tabla()
     {
 
-        $ventas = Venta::with('detalles', 'cliente')->orderBy('idventa', 'desc')->get();
+        $ventas = Venta::with('detalles', 'cliente')->where('id_sucursal', session('sucursal'))->orderBy('idventa', 'desc')->get();
 
         $start_date = (!empty($_GET["start_date"])) ? ($_GET["start_date"]) : ('');
         $end_date = (!empty($_GET["end_date"])) ? ($_GET["end_date"]) : ('');
@@ -163,6 +164,7 @@ class VentaController extends Controller
                 $to = $request->get('total_venta') + $request->get('monto_porcentaje');
                 $venta = new CuentaCorriente();
                 $venta->idcliente = $request->get('idcliente2');
+                $venta->id_sucursal = session('sucursal');
                 $venta->tipo_comprobante = $request->get('tipo_comprobante');
                 $venta->num_comprobante =   $ultimo->idventa;
                 $venta->monto_porcentaje = $request->get('monto_porcentaje');
@@ -240,7 +242,7 @@ class VentaController extends Controller
                     $arde->monto = $precio_venta[$cont];
                     $arde->cantidad = $cantidad[$cont];
                     $arde->tipo_venta = 'Cuenta Corriente';
-                    $arde->tipo_pago = $pago;
+                    $arde->tipo_pago = $pago->tipo_pago;
                     $arde->descripcion = 'Se Vendio: ' . $ar->nombre;
                     $arde->total = $cantidad[$cont] * $precio_venta[$cont];
                     $arde->save();
@@ -357,7 +359,7 @@ class VentaController extends Controller
                     $arde->monto = $precio_venta[$cont];
                     $arde->cantidad = $cantidad[$cont];
                     $arde->tipo_venta = 'Cuenta Corriente';
-                    $arde->tipo_pago = $pago;
+                    $arde->tipo_pago = $pago->tipo_pago;
                     $arde->descripcion = 'Se Vendio: ' . $ar->nombre;
                     $arde->total = $cantidad[$cont] * $precio_venta[$cont];
                     $arde->save(); 
@@ -411,6 +413,7 @@ class VentaController extends Controller
             $to = $request->get('total_venta') + $request->get('monto_porcentaje');
             $venta = new Venta;
             $venta->idcliente = $request->get('idcliente2');
+            $venta->id_sucursal = session('sucursal'); 
             $venta->tipo_comprobante = $request->get('tipo_comprobante');
             $venta->num_comprobante = $request->get('num_comprobante');
             $venta->monto_porcentaje = $request->get('monto_porcentaje');
@@ -550,7 +553,7 @@ class VentaController extends Controller
                 $arde->monto = $precio_venta[$cont];
                 $arde->cantidad = $cantidad[$cont];
                 $arde->tipo_venta = 'Venta';
-                $arde->tipo_pago = $pago;
+                $arde->tipo_pago = $pago->tipo_pago;
                 $arde->descripcion = 'Se Vendio: ' . $ar->nombre;
                 $arde->total = $cantidad[$cont] * $precio_venta[$cont];
                 $arde->save();
@@ -665,9 +668,13 @@ class VentaController extends Controller
         
         $codigoart = request('codigoart');    
         if ($request->ajax()) {
-        $articulo = DB::table('articulo')->where('codigo','=', $codigoart)->get()
-        ->where('estado', 'Activo');
+            $articulo = DB::table('articulo')->where('codigo','=', $codigoart)->where('id_sucursal', session('sucursal'))->get()
+            ->where('estado', 'Activo');
+            return (["articulo"=>$articulo]);    
         return (["articulo"=>$articulo]);    
+            return (["articulo"=>$articulo]);    
+        return (["articulo"=>$articulo]);    
+            return (["articulo"=>$articulo]);    
         }
     }   
 
@@ -678,6 +685,7 @@ class VentaController extends Controller
         if ($request->ajax()) {
         $articulo = DB::table('articulo')->where('nombre', 'LIKE', '%'. $term. '%')
         ->where('estado', 'Activo')
+        ->where('id_sucursal', session('sucursal'))
         ->get();
 
         foreach ($articulo as $articulos){

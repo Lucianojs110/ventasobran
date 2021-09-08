@@ -50,16 +50,16 @@ class ArticuloController extends Controller
   {
       $cate = Config::all()->first();
 
-      $categorias = Categoria::where('condicion',1)->get();
+      $categorias = Categoria::where('condicion',1)->where('id_sucursal', session('sucursal'))->get();
 
-      $articulos = Articulo::with('categorias','detalleVentas','detalleIngresos', 'detalleDevoluciones')->where('estado','Activo')->get();
+      $articulos = Articulo::with('categorias','detalleVentas','detalleIngresos', 'detalleDevoluciones')->where('estado','Activo')->where('id_sucursal', session('sucursal'))->get();
 
 
      return view('almacen.articulo.indexx', compact('articulos','categorias','cate'));
   }
   public function tabla()
   {
-      $articulos = Articulo::with('categorias')->where('estado','Activo')->get();
+      $articulos = Articulo::with('categorias')->where('estado','Activo')->where('id_sucursal', session('sucursal'))->get();
 
       return Datatables::of($articulos)
           ->addColumn('opcion', function ($ar) {
@@ -96,6 +96,7 @@ class ArticuloController extends Controller
   {
       $articulo=new Articulo;
       $articulo->idcategoria=$request->idcategoria;
+      $articulo->id_sucursal = session('sucursal');
       if ($request->codigo == '' || $request->codigo == null) {
           srand((double) microtime( )*1000000);  //Introducimos la "semilla"
           $aleat = rand(1,999999999999);    //rand(mínimo,máximo);

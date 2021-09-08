@@ -23,7 +23,6 @@
             </div>
         </div>
 
-        <h1> se logueo en sucursal  {{session('sucursal')}}</h1>
 
         <div class="box-body">
             <div class="col-lg-3 col-xs-12">

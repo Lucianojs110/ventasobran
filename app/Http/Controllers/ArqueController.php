@@ -142,6 +142,7 @@ class ArqueController extends Controller
         $pago->pago_debito = 0;
         $pago->pago_credito = 0;
         $pago->monto = $request->cantidad;
+        $pago->id_sucursal = session('sucursal');  
         $pago->save();
 
         toastr()->success('Su día ha iniciado perfectamente!', 'Atención');

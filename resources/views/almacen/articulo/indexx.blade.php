@@ -48,7 +48,6 @@
                 <div class="row">
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                         <h3>Listado de Artículos
-                            @canany(['Supervisor', 'Superadmin'])
                             <button data-toggle="modal" data-target="#modal-agregar-articulo" class="btn btn-xs btn-success"><i
                                         data-toggle="tooltip" title="Agregar Artículo" class="fa fa-plus"></i>
                             </button>
@@ -58,7 +57,6 @@
                             <button data-toggle="modal" data-target="#modal-act-precios" class="btn btn-xs btn-warning"><i
                                         data-toggle="tooltip" title="Actualizar Precios" class="fa fa-fw fa-money"></i>
                             </button>
-                            @endcanany
                         </h3>
                     </div>
                 </div>

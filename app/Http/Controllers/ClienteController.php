@@ -19,7 +19,7 @@ class ClienteController extends Controller
 
     public function index(Request $request)
     {
-        $personas = Persona::with('ventas.detalles')->where('tipo_persona', 'Cliente')->get();
+        $personas = Persona::with('ventas.detalles')->where('tipo_persona', 'Cliente')->where('id_sucursal', session('sucursal'))->get();
 
 
         return view('ventas.cliente.indexx', compact('personas'));
@@ -27,7 +27,7 @@ class ClienteController extends Controller
 
     public function tabla()
     {
-        $personas = Persona::with('ventas')->where('tipo_persona', 'Cliente')->get();
+        $personas = Persona::with('ventas')->where('tipo_persona', 'Cliente')->where('id_sucursal', session('sucursal'))->get();
 
         return Datatables::of($personas)
             ->addColumn('opcion', function ($ar) {
@@ -53,6 +53,7 @@ class ClienteController extends Controller
     {
         $persona = new Persona;
         $persona->tipo_persona = 'Cliente';
+        $persona->id_sucursal = session('sucursal');
         $persona->nombre = $request->get('nombre');
         $persona->tipo_documento = $request->get('tipo_documento');
         $persona->num_documento = $request->get('num_documento');

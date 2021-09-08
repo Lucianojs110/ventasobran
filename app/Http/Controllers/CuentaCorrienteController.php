@@ -14,7 +14,7 @@ class CuentaCorrienteController extends Controller
 {
     public function index ()
     {
-       $corriente =  CuentaCorriente::with('detalles.articulo','cliente')->get();
+       $corriente =  CuentaCorriente::with('detalles.articulo','cliente')->where('id_sucursal', session('sucursal'))->get();
 
         return view('corriente.index', compact('corriente'));
     }
@@ -22,7 +22,7 @@ class CuentaCorrienteController extends Controller
     public function tabla()
     {
 
-        $corriente =  CuentaCorriente::with('detalles.articulo','cliente')->get();
+        $corriente =  CuentaCorriente::with('detalles.articulo','cliente')->where('id_sucursal', session('sucursal'))->get();
 
 
         return Datatables::of($corriente)

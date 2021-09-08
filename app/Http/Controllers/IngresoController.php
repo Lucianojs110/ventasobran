@@ -31,7 +31,7 @@ class IngresoController extends Controller
     public function index(Request $request)
     {
 
-        $ingreso = Ingreso::with('detalles', 'proveedor')->get();
+        $ingreso = Ingreso::with('detalles', 'proveedor')->where('id_sucursal', session('sucursal'))->get();
 
         return view('compras.ingreso.index', compact('ingreso'));
 
@@ -40,7 +40,7 @@ class IngresoController extends Controller
     public function tabla()
     {
 
-        $ingreso = Ingreso::with('detalles', 'proveedor')->get();
+        $ingreso = Ingreso::with('detalles', 'proveedor')->where('id_sucursal', session('sucursal'))->get();
 
         $start_date = (!empty($_GET["start_date"])) ? ($_GET["start_date"]) : ('');
         $end_date = (!empty($_GET["end_date"])) ? ($_GET["end_date"]) : ('');
@@ -95,8 +95,8 @@ class IngresoController extends Controller
 
     public function create()
     {
-        $personas = Persona::where('tipo_persona', 'Proveedor')->get();
-        $articulos = Articulo::all();
+        $personas = Persona::where('tipo_persona', 'Proveedor')->where('id_sucursal', session('sucursal'))->get();
+        $articulos = Articulo::where('id_sucursal', session('sucursal'));
         $ing = Ingreso::all()->last();
         if ($ing == null) {
             $ing = '1';
@@ -122,6 +122,7 @@ class IngresoController extends Controller
             $ingreso->fecha_hora = $mytime->toDateTimeString();
             $ingreso->impuesto = '21';
             $ingreso->estado = 'Sin cancelar';
+            $ingreso->id_sucursal = session('sucursal');
             $ingreso->save();
 
             $idarticulo = $request->get('idarticulo');

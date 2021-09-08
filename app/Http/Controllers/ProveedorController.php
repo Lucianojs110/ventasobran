@@ -16,14 +16,14 @@ class ProveedorController extends Controller
   }
     public function index(Request $request)
     {
-        $personas = Persona::with('ingresos.detalles')->where('tipo_persona', 'Proveedor')->get();
+        $personas = Persona::with('ingresos.detalles')->where('tipo_persona', 'Proveedor')->where('id_sucursal', session('sucursal'))->get();
 
         return view('compras.proveedor.indexx', compact('personas'));
     }
 
     public function tabla()
     {
-        $personas = Persona::with('ingresos.detalles')->where('tipo_persona', 'Proveedor')->get();
+        $personas = Persona::with('ingresos.detalles')->where('tipo_persona', 'Proveedor')->where('id_sucursal', session('sucursal'))->get();
 
         return Datatables::of($personas)
             ->addColumn('opcion', function ($ar) {
@@ -49,6 +49,7 @@ class ProveedorController extends Controller
     {
         $persona = new Persona;
         $persona->tipo_persona = 'Proveedor';
+        $persona->id_sucursal = session('sucursal');
         $persona->nombre = $request->get('nombre');
         $persona->tipo_documento = $request->get('tipo_documento');
         $persona->num_documento = $request->get('num_documento');
