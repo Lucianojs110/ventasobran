@@ -54,6 +54,7 @@ class IngresoController extends Controller
                 ->orderBy('idingreso', 'desc')
                 ->where("fecha_hora", ">=", $f1)
                 ->where("fecha_hora", "<=", $f2)
+                ->where('id_sucursal', session('sucursal'))
                 ->get();
 
             $start_date = date('Y-m-d', strtotime($f1));

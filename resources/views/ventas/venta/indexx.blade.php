@@ -40,7 +40,7 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <br>
-                        <div class="table-responsive">
+                        <div  class="table">
                             <table id="ven" class="table table-striped table-bordered table-condensed table-hover">
                                 <thead>
                                 <th>Fecha</th>
@@ -91,13 +91,16 @@
                 {data: 'estado', name: 'estado'},
                 {data: 'opcion', name: 'opcion', orderable: false, searchable: false}
             ],
+            
             "language": {
                 "url": "{{URL::to('/')}}/admin/Spanish.json"
-            }
-
+            },
+           
         });
         $('#btnFiterSubmitSearch').click(function () {
             $('#ven').DataTable().ajax.reload();
+ 
         });
+        
     </script>
 @stop

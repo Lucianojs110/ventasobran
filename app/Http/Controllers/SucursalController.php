@@ -39,7 +39,7 @@ class SucursalController extends Controller
 
 
         if($vali != null){
-            toastr()->error('Error, sucursal(email) ya existente',);
+            toastr()->error('Error, email de sucursal ya existente');
             return Redirect::back();
         }
 
@@ -61,7 +61,7 @@ class SucursalController extends Controller
 
     public function update(Request $request, $id)
     {
-        if(auth()->user()->hasRole('Supervisor')){
+        if(auth()->user()->hasRole('Superadmin')){
             $suc = Sucursal::find($id);
             $suc->nombre = $request->nombre;
             $suc->direccion = $request->direccion;
@@ -77,7 +77,7 @@ class SucursalController extends Controller
             toastr()->info('Sucursal editada correctamente!', ''.$request->name);
             return Redirect::back();
         }else{
-            toastr()->error('No tiene permisos para realizar tal accion',);
+            toastr()->error('No tiene permisos para realizar tal accion');
             return Redirect::back();
         }
         
@@ -93,7 +93,7 @@ class SucursalController extends Controller
             toastr()->error('Sucursal eliminada correctamente!', ''.$suc->name);
             return Redirect::back();
         }else{
-            toastr()->error('No tiene permisos para realizar tal accion',);
+            toastr()->error('No tiene permisos para realizar tal accion');
             return Redirect::back();
         }
     }

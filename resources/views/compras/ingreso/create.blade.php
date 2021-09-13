@@ -125,7 +125,7 @@
 
                         </div>
 
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 table-responsive">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 table">
                             <table id="detalles" class="table">
                                 <thead style="background-color: #A9D0F5">
                                     <th>Opciones</th>

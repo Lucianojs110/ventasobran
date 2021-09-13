@@ -136,6 +136,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/sucursales/update/{id}', 'SucursalController@update')->name('sucursal.update')->middleware('superv.admin');
 
 
+    //INFORMES
+    Route::get('/informes', 'InformeController@index')->name('informe.index')->middleware('superv.admin');
+
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@avisos'])->middleware('supervendedor');
 
 

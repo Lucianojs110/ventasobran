@@ -70,7 +70,9 @@ class VentaController extends Controller
     public function tabla()
     {
 
-        $ventas = Venta::with('detalles', 'cliente')->where('id_sucursal', session('sucursal'))->orderBy('idventa', 'desc')->get();
+        $ventas = Venta::with('detalles', 'cliente')
+        ->where('id_sucursal', session('sucursal'))
+        ->orderBy('idventa', 'desc')->get();
 
         $start_date = (!empty($_GET["start_date"])) ? ($_GET["start_date"]) : ('');
         $end_date = (!empty($_GET["end_date"])) ? ($_GET["end_date"]) : ('');
@@ -84,12 +86,13 @@ class VentaController extends Controller
                 ->orderBy('idventa', 'desc')
                 ->where("fecha_hora", ">=", $f1)
                 ->where("fecha_hora", "<=", $f2)
+                ->where('id_sucursal', session('sucursal'))
                 ->get();
+
 
             $start_date = date('Y-m-d', strtotime($f1));
             $end_date = date('Y-m-d', strtotime($f2));
         }
-
 
         return Datatables::of($ventas)
             ->addColumn('opcion', function ($ar) {
@@ -122,7 +125,7 @@ class VentaController extends Controller
                     return '<span class="label label-info">' . $art->estado . '</span>';
                 }
             })
-            ->rawColumns(['opcion', 'cliente', 'fecha', 'comprobante', 'estado'])
+            ->rawColumns(['opcion', 'cliente', 'fecha', 'comprobante', 'estado', 'suma_venta'])
             ->make(true);
     }
 

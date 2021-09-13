@@ -20,7 +20,7 @@ class DevolucionController extends Controller
 {
     public function store(Request $request)
     {
-        $arqueo = Arqueo::where('estado', 'Abierto')->first();
+        $arqueo = Arqueo::where('estado', 'Abierto')->where('id_sucursal', session('sucursal'))->first();
         if ($arqueo != null) {
 
         $vali = DB::table('devolucions')->where('idventa', $request->idventa)->first();
@@ -36,6 +36,7 @@ class DevolucionController extends Controller
 
         $deco = new Devolucion();
         $deco->num_factura = $request->num_factura;
+        $deco->id_sucursal = session('sucursal');
         $deco->idventa = $request->idventa;
         $deco->idcliente = $request->idcliente;
         $mytime = Carbon::now('America/Argentina/Mendoza');
@@ -67,6 +68,7 @@ class DevolucionController extends Controller
        
         $pago = New ArqueoPago();
         $pago->idarqueo = $arqueo->idarqueo;
+        $pago->id_sucursal = session('sucursal');
         $pago->idventa = $idventa;
         $pago->idingreso = 0;
         $pago->tipo_pago = 'Devolucion'; 
@@ -162,7 +164,7 @@ class DevolucionController extends Controller
     public function index(Request $request)
     {
 
-        $devolucion = Devolucion::with('personas')->get();
+        $devolucion = Devolucion::with('personas')->where('id_sucursal',session('sucursal'))->get();
 
         return view('ventas.devolucion.inicio', compact('devolucion'));
 
@@ -171,8 +173,7 @@ class DevolucionController extends Controller
     public function tabla()
     {
 
-        $devolucion = Devolucion::with('personas')->get();
-
+        $devolucion = Devolucion::with('personas')->where('id_sucursal',session('sucursal'))->get();
 
         return Datatables::of($devolucion)
             ->addColumn('opcion', function ($ar) {

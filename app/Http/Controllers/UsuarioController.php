@@ -58,7 +58,7 @@ class UsuarioController extends Controller
         $vali = User::where('email', $request->email)->first();
 
         if($vali != null){
-            toastr()->error('Error, email ya existente',);
+            toastr()->error('Error, email ya existente');
             return Redirect::back();
         }
 
@@ -84,6 +84,7 @@ class UsuarioController extends Controller
     {
         $user = User::find($id);
         $user->name = $request->name;
+        $user->apellido = $request->apellido;
         $user->email = $request->email;
         if ($request->password != null)
         {

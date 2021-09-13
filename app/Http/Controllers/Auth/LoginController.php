@@ -60,7 +60,9 @@ class LoginController extends Controller
         $credentials = $request->only($this->username(), 'password', 'sucursal');
 
         $id_sucursal = $credentials['sucursal'];
-        session(['sucursal' => $id_sucursal]);
+
+        $sucursal = Sucursal::where('id', $credentials['sucursal'])->first();
+        session(['sucursal' => $id_sucursal, 'nombre_sucursal' => $sucursal->nombre]);
         return $request->only($this->username(), 'password');
                 
     }
@@ -69,13 +71,12 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         
-        $usuario=User::where('email',  $request->email)->first();
         
-
+        if($request->email){
+        $usuario=User::where('email',  $request->email)->first();
         $userRole = DB::table('rols_user')->where('user_id', $usuario->id)->first();
         
      
-
         if($userRole->role_id!='1'){
 
         $sucursalUser = SucursalUser::where('user_id', $usuario->id)->get();
@@ -94,7 +95,8 @@ class LoginController extends Controller
             Session::flash('message','No tiene permisos para ingresar a esta sucursal');
             return redirect()->route('login');
             
-        }
+           }
+       }
     }
     
 
@@ -120,7 +122,10 @@ class LoginController extends Controller
         $this->incrementLoginAttempts($request);
 
         return $this->sendFailedLoginResponse($request);
+
+
     }
+    
 
   
 }

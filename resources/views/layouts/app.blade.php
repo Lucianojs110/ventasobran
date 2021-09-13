@@ -113,6 +113,12 @@
             text-align: right !important;
         }
 
+        .sucursal {
+            text-align: center !important;
+            color: #fff;
+            padding: 15px;
+        }
+
         .content {
             padding: 1px !important;
             padding-left: 1px !important;
@@ -182,9 +188,13 @@
                                 <ul class="nav navbar-nav">
                                     @if (Auth::guest())
                                     @else
+                                        <li class="sucursal" >
+                                           Sucursal: {{session('nombre_sucursal')}}
+                                        </li>
+
                                         <li class="dropdown">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                                               aria-expanded="true">{{Auth::user()->name}} {{ Auth::user()->apellido }}
+                                               aria-expanded="true">Vendedor: {{Auth::user()->name}} {{ Auth::user()->apellido }}
                                                 <span class="caret"></span></a>
                                             <ul style="background-color: #367fa9; border-color: #367fa9;"
                                                 class="dropdown-menu" role="menu">
@@ -313,12 +323,21 @@
                                         </a>
                                     </li>
                                     @endcan
-                                    @canany(['Superadmin', 'Supervisor'])
+                                    @canany(['Superadmin'])
                                     <li class="header"></li>
                                     <li class="treeview {{(Request::route()->getName() == 'sucursal.index') ? 'active' :  '' }} ">
                                         <a href="{{ route('sucursal.index') }}">
                                             <i class="fa fa-building"></i>
                                             <span>Sucursales</span>
+                                        </a>
+                                    </li>
+                                    @endcanany
+                                    @canany(['Superadmin'])
+                                    <li class="header"></li>
+                                    <li class="treeview {{(Request::route()->getName() == 'informe.index') ? 'active' :  '' }} ">
+                                        <a href="{{ route('informe.index') }}">
+                                            <i class="fa fa-building"></i>
+                                            <span>Informes</span>
                                         </a>
                                     </li>
                                     @endcanany
