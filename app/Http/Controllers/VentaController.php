@@ -15,6 +15,7 @@ use SisVentaNew\ArqueoPago;
 use SisVentaNew\DetalleVenta;
 use SisVentaNew\Presupuesto;
 use SisVentaNew\Persona;
+use SisVentaNew\Sucursal;
 use SisVentaNew\EstadisticasVentas;
 use Carbon\Carbon;
 use SisVentaNew\Arqueo;
@@ -125,10 +126,70 @@ class VentaController extends Controller
                     return '<span class="label label-info">' . $art->estado . '</span>';
                 }
             })
-            ->rawColumns(['opcion', 'cliente', 'fecha', 'comprobante', 'estado', 'suma_venta'])
+           
+            ->rawColumns(['opcion', 'cliente', 'fecha', 'comprobante', 'estado', 'total_venta'])
             ->make(true);
     }
 
+    public function tabla_total(Request $request)
+    {
+
+       
+        $start_date = (!empty(request('start_date'))) ? (request('start_date')) : ('');
+        $end_date = (!empty(request('end_date'))) ? (request('end_date')) : ('');
+
+        
+        if ($start_date && $end_date) {
+
+            $f1 = Carbon::parse($start_date);
+            $f2 = Carbon::parse($end_date);
+
+            $venta = DB::table('venta')
+            ->select(DB::raw('sum(paga) as Efectivo, sum(tarjeta_debito) as Debito, sum(tarjeta_credito) as Credito ,sum(total_venta) as Total'))
+            ->where("fecha_hora", ">=", $f1)
+            ->where("fecha_hora", "<=", $f2)
+            ->where('id_sucursal', session('sucursal'))
+            ->where('estado', 'Activa')
+            ->get();
+
+           
+        }else{
+
+            $venta = DB::table('venta')
+            ->select(DB::raw('sum(paga) as Efectivo, sum(tarjeta_debito) as Debito, sum(tarjeta_credito) as Credito ,sum(total_venta) as Total'))
+            ->where('id_sucursal', session('sucursal'))
+            ->where('estado', 'Activa')
+            ->get();
+
+        }
+        
+
+        /*
+        if ($start_date && $end_date) {
+
+            $f1 = Carbon::parse($start_date);
+            $f2 = Carbon::parse($end_date);
+
+            $venta = DB::table('arqueo_pagos')
+            ->select(DB::raw('sum(pago_efectivo) as Efectivo, sum(pago_debito) as Debito, sum(pago_credito) as Credito ,sum(monto) as Total'))
+            ->where("created_at", ">=", $f1)
+            ->where("created_at", "<=", $f2)
+            ->where('id_sucursal', session('sucursal'))
+            ->get();
+
+           
+        }else{
+
+            $venta = DB::table('arqueo_pagos')
+            ->select(DB::raw('sum(pago_efectivo) as Efectivo, sum(pago_debito) as Debito, sum(pago_credito) as Credito ,sum(monto) as Total'))
+            ->where('id_sucursal', session('sucursal'))
+            ->get();
+
+        }
+        */
+       
+        return $venta;
+    }
     
     
     
@@ -252,7 +313,7 @@ class VentaController extends Controller
                     
 
 
-                    $config1 = Config::where('idconfig','=',1)->get();
+                    $config1 = Sucursal::where('id',session('sucursal'))->get();
                     foreach($config1 as $config){
                         $url_API_woo = $config->url_API_woo;
                         $ck_API_woo = $config->ck_API_woo;
@@ -368,7 +429,7 @@ class VentaController extends Controller
                     $arde->save(); 
 
 
-                    $config1 = Config::where('idconfig','=',1)->get();
+                    $config1 = Sucursal::where('id',session('sucursal'))->get();
                     foreach($config1 as $config){
                         $url_API_woo = $config->url_API_woo;
                         $ck_API_woo = $config->ck_API_woo;
@@ -462,7 +523,7 @@ class VentaController extends Controller
                 $pago = 'Tarjeta de Credito';
             }
 
-            $arqueo = Arqueo::where('estado', 'Abierto')->first();
+            $arqueo = Arqueo::where('estado', 'Abierto')->where('id_sucursal',session('sucursal'))->first();
 
             
             $ar = Arqueo::find($arqueo->idarqueo);
@@ -561,7 +622,7 @@ class VentaController extends Controller
                 $arde->total = $cantidad[$cont] * $precio_venta[$cont];
                 $arde->save();
 
-                $config1 = Config::where('idconfig','=',1)->get();
+                $config1 = Sucursal::where('id',session('sucursal'))->get();
                 foreach($config1 as $config){
                     $url_API_woo = $config->url_API_woo;
                     $ck_API_woo = $config->ck_API_woo;
@@ -619,7 +680,7 @@ class VentaController extends Controller
     {
         $venta = Venta::with('detalles.articulo', 'cliente', 'usuario')->where('idventa', $id)->orderBy('idventa', 'desc')->first();
        
-        $config=DB::table('config')->where('idconfig','=','1')->get();
+        
         
         $venta1=DB::table('venta')->where('idventa', $id)->get();
 
@@ -632,11 +693,14 @@ class VentaController extends Controller
 
         $vtocae = str_replace("-","",$vtocae1);
 
-        foreach ($config as $config1){
+        $sucursal = Sucursal::where('id',session('sucursal'))->first();
+        //dd($sucursal );
 
-            $cuit = $config1->dni;
-            $punto_venta = $config1->punto_venta;
-        }
+        
+
+            $cuit = $sucursal->cuit;
+            $punto_venta = $sucursal->punto_venta;
+       
 
         if($tipo_comprobante=='Factura C'){
             $tipo_comp = '011';
@@ -649,7 +713,7 @@ class VentaController extends Controller
         
         $codigo = $cuit.$tipo_comp.str_pad($punto_venta, 5, "0", STR_PAD_LEFT).$cae.$vtocae;
 
-        return view("ventas.venta.tickes", compact('venta', 'codigo'));
+        return view("ventas.venta.tickes", compact('venta', 'codigo', 'sucursal'));
 
     }
 
@@ -756,12 +820,12 @@ class VentaController extends Controller
          $tipo_comprobante = $venta1->tipo_comprobante;
         }
 
-        $config=DB::table('config')->where('idconfig','=','1')->get();
+        $sucursales=Sucursal::where('id', session('sucursal'))->get();
 
-        foreach ($config as $config1)
+        foreach ($sucursales as $sucursal)
         {
-         $cuit = $config1->dni;
-         $punto_venta = $config1->punto_venta; 
+         $cuit = $sucursal->cuit;
+         $punto_venta = $sucursal->punto_venta; 
         }
 
         if ($idcliente==1){
@@ -849,11 +913,11 @@ class VentaController extends Controller
 
         $data = array(
             'CantReg' 	=> 1,  // Cantidad de comprobantes a registrar
-            'PtoVta' 	=> $punto,  // Punto de venta
+            'PtoVta' 	=> $punto_venta,  // Punto de venta
             'CbteTipo' 	=> 6,  // Tipo de comprobante (ver tipos disponibles) 
             'Concepto' 	=> 1,  // Concepto del Comprobante: (1)Productos, (2)Servicios, (3)Productos y Servicios
             'DocTipo' 	=> $doctipo, // Tipo de documento del comprador (99 consumidor final, ver tipos disponibles)
-            'DocNro' 	=> intval($clientCuit),  // Número de documento del comprador (0 consumidor final)
+            'DocNro' 	=> intval($cuit),  // Número de documento del comprador (0 consumidor final)
             'CbteDesde' 	=> $numComp,  // Número de comprobante o numero del primer comprobante en caso de ser mas de uno
             'CbteHasta' 	=> $numComp,  // Número de comprobante o numero del último comprobante en caso de ser mas de uno
             'CbteFch' 		=> intval($date2), // (Opcional) Fecha del comprobante (yyyymmdd) o fecha actual si es nulo

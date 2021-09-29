@@ -12,6 +12,7 @@ use SisVentaNew\Http\Requests\UsuarioFormRequest;
 use SisVentaNew\User;
 use SisVentaNew\Sucursal;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UsuarioController extends Controller
 {
@@ -22,7 +23,7 @@ class UsuarioController extends Controller
 
     public function index()
     {
-        $user = User::where('estado','Activo')->get();
+        $user = User::get();
 
         $roles = DB::table('roles')->select('id', 'name')->get();
         $user_roles = DB::table('rols_user')->select('id', 'user_id', 'role_id')->get();
@@ -34,7 +35,7 @@ class UsuarioController extends Controller
 
     public function tabla()
     {
-        $users = User::where('estado','Activo')->get();
+        $users = User::all();
 
 
         return Datatables::of($users)
@@ -65,7 +66,6 @@ class UsuarioController extends Controller
         $user = New User();
         $user->name = $request->name;
         $user->apellido = $request->apellido;
-        $user->estado = 'Activo';
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->save();
@@ -107,16 +107,11 @@ class UsuarioController extends Controller
 
     public function delete($id)
     {
-        $users = User::find($id);
-        $users->estado = 'Desactivo';
-        $users->save();
+        $user = User::find($id);
+        $user->delete();
 
-        DB::table('rols_user')->where('user_id', $id)->delete();
-
-        DB::table('sucursals_user')->where('user_id', $id)->delete();
-
-        toastr()->error('Su usuario se ha borrado correctamente!', ''.$users->name);
-        return redirect()->route('login');
+        toastr()->error('Su usuario se ha borrado correctamente!', ''.$user->name);
+        return Redirect::back();
 
     }
 }

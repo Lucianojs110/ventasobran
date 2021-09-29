@@ -9,7 +9,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    @canany(['Supervisor', 'Superadmin'])
+                
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <h3>Nueva categoría</h3>
                         {!! Form::open(['route' => 'categoria.store', 'method'=>'post']) !!}
@@ -34,7 +34,7 @@
                         </div>
                         {!!Form::close()!!}
                     </div>
-                    @endcanany
+           
                     @foreach($categorias as $cat)
                         @include('almacen.categoria.modal-editar')
                         @include('almacen.categoria.modal-borrar')

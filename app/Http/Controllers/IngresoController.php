@@ -12,13 +12,14 @@ use SisVentaNew\Http\Requests\IngresoFormRequest;
 use SisVentaNew\Ingreso;
 use SisVentaNew\Persona;
 use SisVentaNew\DetalleIngreso;
-use DB;
 use SisVentaNew\Config;
 use Carbon\Carbon;
 use Automattic\WooCommerce\Client;
 use Response;
 use Illuminate\Support\Collection;
 use Yajra\DataTables\Facades\DataTables;
+use SisVentaNew\Sucursal;
+use Illuminate\Support\Facades\DB;
 
 
 class IngresoController extends Controller
@@ -94,6 +95,41 @@ class IngresoController extends Controller
             ->make(true);
     }
 
+
+    public function tabla_total(Request $request)
+    {
+
+       
+        $start_date = (!empty(request('start_date'))) ? (request('start_date')) : ('');
+        $end_date = (!empty(request('end_date'))) ? (request('end_date')) : ('');
+
+        if ($start_date && $end_date) {
+
+            $f1 = Carbon::parse($start_date);
+            $f2 = Carbon::parse($end_date);
+
+            $ingreso = DB::table('ingreso')
+            ->select(DB::raw('sum(total) as Total'))
+            ->where("fecha_hora", ">=", $f1)
+            ->where("fecha_hora", "<=", $f2)
+            ->where('id_sucursal', session('sucursal'))
+            ->where('estado', 'Sin cancelar')
+            ->get();
+
+           
+        }else{
+
+            $ingreso = DB::table('ingreso')
+            ->select(DB::raw('sum(total) as Total'))
+            ->where('id_sucursal', session('sucursal'))
+            ->where('estado', 'Sin cancelar')
+            ->get();
+
+        }
+       
+        return $ingreso;
+    }
+
     public function create()
     {
         $personas = Persona::where('tipo_persona', 'Proveedor')->where('id_sucursal', session('sucursal'))->get();
@@ -149,7 +185,7 @@ class IngresoController extends Controller
                 $articulo->update();
 
 
-                $config1 = Config::where('idconfig','=',1)->get();
+                $config1 = Sucursal::where('id',session('sucursal'))->get();
                 foreach($config1 as $config){
                     $url_API_woo = $config->url_API_woo;
                     $ck_API_woo = $config->ck_API_woo;

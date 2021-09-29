@@ -29,13 +29,13 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 //    ARTICULO
-    Route::get('/articulo', 'ArticuloController@index')->name('articulo.index')->middleware('supervendedor');
-    Route::get('/articulo-tabla', 'ArticuloController@tabla')->name('articulo.tabla')->middleware('supervendedor');
-    Route::post('articulo-store', 'ArticuloController@store')->name('articulo.store')->middleware('superv.admin');
-    Route::patch('articulo-update/{id}', 'ArticuloController@update')->name('articulo.update')->middleware('superv.admin');
-    Route::delete('articulo-delete/{id}', 'ArticuloController@destroy')->name('articulo.destroy')->middleware('superv.admin');
-    Route::put('articulo-cambiar/{id}', 'ArticuloController@cambiar')->name('cambiar.precio')->middleware('superv.admin');
-    Route::post('actualizarprecios', 'ArticuloController@actualizarprecios')->name('actualizarprecios')->middleware('superv.admin');
+    Route::get('/articulo', 'ArticuloController@index')->name('articulo.index');
+    Route::get('/articulo-tabla', 'ArticuloController@tabla')->name('articulo.tabla');
+    Route::post('articulo-store', 'ArticuloController@store')->name('articulo.store');
+    Route::patch('articulo-update/{id}', 'ArticuloController@update')->name('articulo.update');
+    Route::delete('articulo-delete/{id}', 'ArticuloController@destroy')->name('articulo.destroy');
+    Route::put('articulo-cambiar/{id}', 'ArticuloController@cambiar')->name('cambiar.precio');
+    Route::post('actualizarprecios', 'ArticuloController@actualizarprecios')->name('actualizarprecios');
 
 
 //    CATEGORIA
@@ -55,11 +55,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('consultarcuit', 'ClienteController@consultarcuit')->name('consultarcuit')->middleware('superv.admin');
 
 //    PROVEEDORES
-    Route::get('/proveedor', 'ProveedorController@index')->name('proveedor.index')->middleware('superv.admin');
-    Route::get('/proveedor-tabla', 'ProveedorController@tabla')->name('proveedor.tabla')->middleware('superv.admin');
-    Route::post('proveedor-store', 'ProveedorController@store')->name('proveedor.store')->middleware('superv.admin');
-    Route::patch('proveedor-update/{id}', 'ProveedorController@update')->name('proveedor.update')->middleware('superv.admin');
-    Route::delete('proveedor-delete/{id}', 'ProveedorController@destroy')->name('proveedor.destroy')->middleware('superv.admin');
+    Route::get('/proveedor', 'ProveedorController@index')->name('proveedor.index');
+    Route::get('/proveedor-tabla', 'ProveedorController@tabla')->name('proveedor.tabla');
+    Route::post('proveedor-store', 'ProveedorController@store')->name('proveedor.store');
+    Route::patch('proveedor-update/{id}', 'ProveedorController@update')->name('proveedor.update');
+    Route::delete('proveedor-delete/{id}', 'ProveedorController@destroy')->name('proveedor.destroy');
 
 //    VENTA
     Route::get('ventas', 'VentaController@index')->name('venta.index')->middleware('supervendedor');
@@ -76,17 +76,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/consultacodigo', 'VentaController@consultacodigo')->name('consultacodigo')->middleware('supervendedor');
     Route::get('/consultaproducto', 'VentaController@consultaproducto')->name('consultaproducto')->middleware('supervendedor');
     Route::get('/consultafactura', 'VentaController@consultafactura')->name('consultafactura')->middleware('supervendedor');
+    Route::get('/tablatotal', 'VentaController@tabla_total')->name('tablatotal');
 
 
 //    INGRESO
-    Route::get('ingreso', 'IngresoController@index' )->name('ingreso.index')->middleware('superv.admin');
-    Route::get('ingreso-crear', 'IngresoController@create' )->name('ingreso.create')->middleware('superv.admin');
-    Route::get('ingreso-tabla', 'IngresoController@tabla'  )->name('ingreso.tabla')->middleware('superv.admin');
-    Route::get('ingreso-ver/{id}','IngresoController@show'  )->name('ingreso.show')->middleware('superv.admin');
-    Route::get('ingreso-editar/{id}','IngresoController@edit'  )->name('ingreso.edit')->middleware('superv.admin');
-    Route::post('ingreso-store', 'IngresoController@store' )->name('ingreso.store')->middleware('superv.admin');
-    Route::patch('ingreso-update/{id}','IngresoController@update'  )->name('ingreso.update')->middleware('superv.admin');
-    Route::delete('ingreso-borrar/{id}', 'IngresoController@destroy' )->name('ingreso.destroy')->middleware('superv.admin');
+    Route::get('ingreso', 'IngresoController@index' )->name('ingreso.index');
+    Route::get('ingreso-crear', 'IngresoController@create' )->name('ingreso.create');
+    Route::get('ingreso-tabla', 'IngresoController@tabla'  )->name('ingreso.tabla');
+    Route::get('ingreso-ver/{id}','IngresoController@show'  )->name('ingreso.show');
+    Route::get('ingreso-editar/{id}','IngresoController@edit'  )->name('ingreso.edit');
+    Route::post('ingreso-store', 'IngresoController@store' )->name('ingreso.store');
+    Route::patch('ingreso-update/{id}','IngresoController@update'  )->name('ingreso.update');
+    Route::delete('ingreso-borrar/{id}', 'IngresoController@destroy' )->name('ingreso.destroy');
+    Route::get('/tablatotalingreso', 'IngresoController@tabla_total')->name('tablatotalingreso');
 
 
 //    DEVOLUCION
@@ -97,15 +99,15 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 //    ARQUEO
-    Route::get('/arqueo', 'ArqueController@index')->name('arqueo.index')->middleware('supervendedor');
-    Route::get('/arqueo/tabla', 'ArqueController@tabla')->name('arqueo.tabla')->middleware('supervendedor');
-    Route::get('/arqueo/detalle/{id}', 'ArqueController@show')->name('arqueo.show')->middleware('supervendedor');
-    Route::get('/arqueo/tabla/{id}', 'ArqueController@tablashow')->name('arqueo.show.tabla')->middleware('supervendedor');
-    Route::put('/arqueo/update/{id}', 'ArqueController@update')->name('arqueo.update')->middleware('supervendedor');
-    Route::post('/arqueo/store', 'ArqueController@store')->name('arqueo.store')->middleware('supervendedor');
-    Route::post('/arqueo/detalle/store', 'ArqueController@storeshow')->name('arqueo.store.show')->middleware('supervendedor');
-    Route::get('/arqueo/pagos/{id}', 'ArqueController@pagos')->name('arqueo.pago.show')->middleware('supervendedor');
-    Route::get('/arqueo/tabla-pago/{id}', 'ArqueController@tablapago')->name('arqueo.pago.tabla')->middleware('supervendedor');
+    Route::get('/arqueo', 'ArqueController@index')->name('arqueo.index');
+    Route::get('/arqueo/tabla', 'ArqueController@tabla')->name('arqueo.tabla');
+    Route::get('/arqueo/detalle/{id}', 'ArqueController@show')->name('arqueo.show');
+    Route::get('/arqueo/tabla/{id}', 'ArqueController@tablashow')->name('arqueo.show.tabla');
+    Route::put('/arqueo/update/{id}', 'ArqueController@update')->name('arqueo.update');
+    Route::post('/arqueo/store', 'ArqueController@store')->name('arqueo.store');
+    Route::post('/arqueo/detalle/store', 'ArqueController@storeshow')->name('arqueo.store.show');
+    Route::get('/arqueo/pagos/{id}', 'ArqueController@pagos')->name('arqueo.pago.show');
+    Route::get('/arqueo/tabla-pago/{id}', 'ArqueController@tablapago')->name('arqueo.pago.tabla');
 
 //    CONFIGURACION
     Route::get('configuracion', 'ConfigController@index')->name('configuracion')->middleware('superv.admin');
@@ -138,8 +140,22 @@ Route::group(['middleware' => 'auth'], function () {
 
     //INFORMES
     Route::get('/informes', 'InformeController@index')->name('informe.index')->middleware('superv.admin');
-
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@avisos'])->middleware('supervendedor');
+   
+
+
+    //    GASTOS
+    Route::get('/gastos', 'GastosController@index')->name('gastos.index');
+    Route::get('/gastos/tabla', 'GastosController@tabla')->name('gastos.tabla');
+    Route::get('/gastos/tablatipo', 'GastosController@tablatipo')->name('gastos.tablatipo');
+    Route::post('/gastos/store', 'GastosController@store')->name('gastos.store');
+    Route::post('/gastos/storetp', 'GastosController@storetp')->name('gastos.storetp');
+    Route::patch('/gastos/updatetg/{id}', 'GastosController@updatetg')->name('gastos.updatetg');
+    Route::patch('/gastos/update/{id}', 'GastosController@update')->name('gastos.update');
+    Route::delete('gastos-deletetg/{id}', 'GastosController@destroytg')->name('gastos.destroytg');
+    Route::delete('gastos-delete/{id}', 'GastosController@destroy')->name('gastos.destroy');
+    Route::post('/consultagasto', 'GastosController@consultagasto')->name('consultagasto');
+    Route::get('/tablatotalgasto', 'GastosController@tabla_total')->name('tablatotalgasto');
 
 
 

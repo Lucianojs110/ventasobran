@@ -42,9 +42,9 @@ class HomeController extends Controller
       
       $sucursal = Sucursal::where('id', session('id_sucursal'))->first();
       
-      $aviso= Articulo::orderBy('stock', 'asc')->where('estado','Activo')->where('id_sucursal', session('id_sucursal'))->get();
+      $aviso= Articulo::orderBy('stock', 'asc')->where('estado','Activo')->where('id_sucursal', session('sucursal'))->get();
 
-      $estadistica = DB::table('estadistica_venta as es')
+      $estadistica = DB::table('detalle_venta as es')
        ->join('articulo as a','es.idarticulo','=','a.idarticulo')
        ->selectRaw('a.nombre, sum(es.cantidad) cantidad, sum(es.precio_venta) precio_venta')
        ->where('id_sucursal', session('sucursal'))
@@ -85,20 +85,16 @@ class HomeController extends Controller
         ->where('id_sucursal', session('sucursal'))
         ->get();
 
-        $ventas = ArqueoPago::where('tipo_pago','Venta')->selectRaw('year(created_at) year, monthname(created_at) monthname, month(created_at) month, sum(pago_efectivo) efectivo, sum(pago_debito) debito, sum(pago_credito) credito, sum(pago_credito+pago_debito+pago_efectivo) data')
-        ->groupBy('year', 'month', 'monthname')
-        ->orderBy('year', 'desc')
-        ->orderBy('month', 'desc')
-        ->where('id_sucursal', session('sucursal'))
-        ->get();
 
-
-        $devolucion = ArqueoPago::where('tipo_pago','Devolucion')->selectRaw('year(created_at) year, monthname(created_at) monthname, month(created_at) month,  sum(monto) data')
+        $ganancias = ArqueoPago::selectRaw('year(created_at) year, monthname(created_at) monthname, month(created_at) month, sum(pago_efectivo) efectivo, sum(pago_debito) debito, sum(pago_credito) credito, sum(monto) data')
         ->groupBy('year', 'month', 'monthname')
         ->orderBy('year', 'desc')
         ->orderBy('month', 'desc')
         ->where('id_sucursal', session('sucursal'))
         ->get(); 
+
+
+
 
       $cuenta = CuentaCorriente::where('estado','Sin Cancelar')->where('id_sucursal', session('sucursal'))->get();
       $usuarios = User::where('estado','Activo')->get();
@@ -115,11 +111,10 @@ class HomeController extends Controller
           'cliente',
           'proveedor',
           'resultado',
-          'ventas',
-          'devolucion',
           'cuenta',
           'usuarios',
-          'sucursal'
+          'sucursal',
+          'ganancias'
 
       ));
     }

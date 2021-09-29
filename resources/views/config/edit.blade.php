@@ -121,45 +121,7 @@
         </div>
         <br>
        
-        <div class="container border" style=" border-radius:5px; border:1px solid #BFC9CA "> 
-        <h4>Configuracion API Woocomerce</h4> 
-                 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
-                        <div class="form-group">
-                            <label>Sincronizar</label>
-                            <select name="sincronizar" class="form-control">
-                                @if($config->sincronizar == '1')
-                                    <option selected value="1">Si</option>
-                                    <option value="0">No</option>
-                                @else
-                                    <option value="1">Si</option>
-                                    <option selected value="0">No</option>
-                                @endif
-                            </select>
-                        </div>
-                    </div>
-                   
-                   <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                        <div class="form-group">
-                            <label>Url API WooCommerce </label>
-                            <input type="text" value="{{ $config->url_API_woo }}" name="urlAPIwoo"
-                                placeholder="Ingrese la url de la API" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                        <div class="form-group">
-                            <label>Clave API WooCommerce</label>
-                            <input type="text" value="{{ $config->ck_API_woo }}" name="ckAPIwoo"
-                                placeholder="Clave Api" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                        <div class="form-group">
-                            <label>Clave Usuario API WooCommerce </label>
-                            <input type="text" value="{{ $config->cs_API_woo}}" name="csAPIwoo"
-                                placeholder="Clave Usuario" class="form-control">
-                        </div>
-                    </div>
-        </div>  
+   
         <br>  
         <div class="container border" style=" border-radius:5px; border:1px solid #BFC9CA "> 
         <h4>Imagen de los comprobantes</h4>

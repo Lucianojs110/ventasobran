@@ -66,7 +66,7 @@
 
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="row">
-                        <div class="table">
+                        <div class="table-responsive">
                             <table id="art" class="table table-striped table-bordered table-condensed table-hover">
                                 <thead>
                                 <th>Nombre</th>
@@ -177,6 +177,7 @@
         $('#art').DataTable({
             processing: true,
             serverSide: true,
+            responsive: true,
             iDisplayLength: 10,
             order: [[0, "desc"]],
             ajax: "{{route('articulo.tabla')}}",

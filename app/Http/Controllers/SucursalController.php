@@ -51,7 +51,12 @@ class SucursalController extends Controller
         $suc->ingresos_brutos = $request->ingresos_brutos;
         $suc->telefono = $request->telefono;
         $suc->email = $request->email;
+        $suc->punto_venta = $request->punto;
         $suc->impuesto = $request->impuesto;
+        $suc->url_API_woo=$request->urlAPIwoo;
+        $suc->cs_API_woo=$request->csAPIwoo;
+        $suc->ck_API_woo=$request->ckAPIwoo;
+        $suc->sincronizar=$request->sincronizar;
 
         $suc->save();
         
@@ -61,7 +66,7 @@ class SucursalController extends Controller
 
     public function update(Request $request, $id)
     {
-        if(auth()->user()->hasRole('Superadmin')){
+        
             $suc = Sucursal::find($id);
             $suc->nombre = $request->nombre;
             $suc->direccion = $request->direccion;
@@ -70,31 +75,30 @@ class SucursalController extends Controller
             $suc->ingresos_brutos = $request->ingresos_brutos;
             $suc->telefono = $request->telefono;
             $suc->email = $request->email;
+            $suc->punto_venta = $request->punto;
             $suc->impuesto = $request->impuesto;
+            $suc->url_API_woo=$request->urlAPIwoo;
+            $suc->cs_API_woo=$request->csAPIwoo;
+            $suc->ck_API_woo=$request->ckAPIwoo;
+            $suc->sincronizar=$request->sincronizar;
 
             $suc->save();
             
             toastr()->info('Sucursal editada correctamente!', ''.$request->name);
             return Redirect::back();
-        }else{
-            toastr()->error('No tiene permisos para realizar tal accion');
-            return Redirect::back();
-        }
+        
         
     }
 
     public function delete($id)
     {
-        if(auth()->user()->hasRole('Supervisor')){
+       
             $suc = Sucursal::find($id);
             $suc->estado = 'Desactivo';
             $suc->save();
 
             toastr()->error('Sucursal eliminada correctamente!', ''.$suc->name);
             return Redirect::back();
-        }else{
-            toastr()->error('No tiene permisos para realizar tal accion');
-            return Redirect::back();
-        }
+       
     }
 }

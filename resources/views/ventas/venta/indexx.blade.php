@@ -37,10 +37,12 @@
                 @foreach($ventas as $ven)
                     @include('ventas.venta.modal')
                 @endforeach
+
+
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <br>
-                        <div  class="table">
+                        <div  class="table-responsive">
                             <table id="ven" class="table table-striped table-bordered table-condensed table-hover">
                                 <thead>
                                 <th>Fecha</th>
@@ -51,10 +53,22 @@
                                 <th>Estado</th>
                                 <th>Opciones</th>
                                 </thead>
+                                <tfoot>
+                                <tr style="font-size: 20px">
+                                 <td id="efectivo"></td>
+                                 <td id="credito"></td>
+                                 <td id="debito"></td>
+                                 <td id="total"></td>
+                                 <td></td>
+                                 <td></td>
+                                 <td></td>
+                                </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -63,6 +77,7 @@
     <script>
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
+            tabla_total()
         });
         $.ajaxSetup({
             headers: {
@@ -97,10 +112,63 @@
             },
            
         });
+        
         $('#btnFiterSubmitSearch').click(function () {
             $('#ven').DataTable().ajax.reload();
+            tabla_total()
  
         });
+
+
+
+        function tabla_total()
+             {
+             $.ajax({
+                   headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                   type: "GET",
+                   url: "{{route('tablatotal')}}",
+                   dataType: "json",
+                   data: {
+                    start_date: $('#start_date').val(),
+                    end_date: $('#end_date').val()
+                   },
+                   success: function(data) {
+                    if(data[0].Total==null){
+                        $('#total').text('Total $0');
+                    }else{
+                        $('#total').text('Total  $'+data[0].Total);
+                    }
+
+                    if(data[0].Debito==null){
+                        $('#debito').text('Debito $0');
+                    }else{
+                        $('#debito').text('Debito $'+data[0].Debito);
+                    }
+
+                    if(data[0].Credito==null){
+                        $('#credito').text('Credito $0');
+                    }else{
+                        $('#credito').text('Credito $'+data[0].Credito);
+                    }
+
+                    if(data[0].Efectivo==null){
+                        $('#efectivo').text('Efectivo $0');
+                    }else{
+                        $('#efectivo').text('Efectivo $'+data[0].Efectivo);
+                    }
+                   
+                    
+                    
+                    
+                    
+                   },
+                  
+               });
+               return false;
+             } 
+
         
+
+       
     </script>
 @stop

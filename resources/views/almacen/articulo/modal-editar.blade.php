@@ -52,13 +52,23 @@
                             <input type="text"   name="codigo"  value="{{$art->codigo}}" class="form-control" placeholder="Codígo del artículo...">
                         </div>
                     </div>
+                    @canany(['Supervisor', 'Superadmin'])
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            <label for="stock">Stock</label>
+                            <input   required  value="{{$art->stock}}" name="stock" class="form-control">
+                        </div>
+                    </div>
+                    @endcanany  
+                    
+                    @canany(['Vendedor'])
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
                             <label for="stock">Stock</label>
                             <input  readonly required  value="{{$art->stock}}" name="stock" class="form-control">
                         </div>
                     </div>
-                    
+                    @endcanany 
                     
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">

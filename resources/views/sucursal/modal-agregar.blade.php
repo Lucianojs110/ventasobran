@@ -38,16 +38,55 @@
                         <label for="">Email</label>
                         <input required type="text" name="email" class="form-control">
                     </div>
-                    <div class="py-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         
                         <label for="">Condicion frente al Iva</label>
                         <select name="impuesto" class="form-control">
-                            
                             <option selected value="11">Monotributo</option>
                             <option value="6">Resp. Inscripto</option>
-                            
                         </select>
                     </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <label for="">Punto de venta afip</label>
+                        <input  required type="number" name="punto" class="form-control">
+                    </div>
+
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <label for="">Sincronizar con tienda WC</label>
+                        <div class="form-group">
+                            <select name="sincronizar" class="form-control">
+                                <option selected value="1">Si</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                        
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Url API WooCommerce </label>
+                            <input type="text"  name="urlAPIwoo"
+                                placeholder="Ingrese la url de la API" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Clave API WooCommerce</label>
+                            <input type="text"  name="ckAPIwoo"
+                                placeholder="Clave Api" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Clave Usuario API WooCommerce </label>
+                            <input type="text"  name="csAPIwoo"
+                                placeholder="Clave Usuario" class="form-control">
+                        </div>
+                    </div>
+
+
                 </div>
                 {!!Form::close()!!}
             </div>

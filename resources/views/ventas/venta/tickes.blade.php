@@ -9,7 +9,7 @@
     width: 100%;
     height: 100%;
     z-index: 9999;
-    background: url('{{ asset('imagenes/loading2.gif') }}') 50% 50% no-repeat rgb(249, 249, 249);
+    background: url('{{ asset('imagenes/loading.gif') }}') 50% 50% no-repeat rgb(249, 249, 249);
     opacity: .8;
   }
 
@@ -41,7 +41,7 @@
 
             <img src="{{ asset('imagenes/config/'.$config->imagen) }}" height="80%"
               width="45%"><br>
-            <span>de: {{ $config->razon_social }}</span>
+           
           </th>
           <th WIDTH="100" style="border: 1px solid; text-align: center">
 
@@ -72,18 +72,18 @@
       <tbody>
         <tr style="border: 1px solid">
           <th WIDTH="500" HEIGHT="50" style="padding: 10px; font-family: sans-serif">
-            Direccion: {{ $config->direccion }}<br>
-            @if($config->impuesto == 11)
+            Direccion: {{ $sucursal->direccion }}<br>
+            @if($sucursal->impuesto == 11)
               Iva: Monotributo <br>
             @else
               Iva: Responsable Inscripto <br>
             @endif
-            Cuit: {{ $config->dni }}<br>
+            Cuit: {{ $sucursal->cuit }}<br>
           </th>
           <th WIDTH="500" style=" padding: 10px; font-family: sans-serif">
-            Ingresos Brutos: {{ $config->ingresos_brutos }}<br>
-            Telefono: {{ $config->telefono }}<br>
-            Email: {{ $config->correo }}<br>
+            Ingresos Brutos: {{ $sucursal->ingresos_brutos }}<br>
+            Telefono: {{ $sucursal->telefono }}<br>
+            Email: {{ $sucursal->email }}<br>
           </th>
 
         <tr style="border: 1px solid">
@@ -228,15 +228,15 @@
         </div>
         <div style="text-align:left; font-size:12; font-family: Arial">
           Razon Social: {{ $config->razon_social }}<br>
-          Cuit: {{ $config->dni }}<br>
-          Ingresos Brutos: {{ $config->ingresos_brutos }}<br>
-          @if($config->impuesto == 11)
+          Cuit: {{ $sucursal->cuit }}<br>
+          Ingresos Brutos: {{ $sucursal->ingresos_brutos }}<br>
+          @if($sucursal->impuesto == 11)
             Iva: Monotributo <br>
           @else
             Iva: Responsable Inscripto <br>
           @endif
 
-          Direccion: {{ $config->direccion }}<br>
+          Direccion: {{ $sucursal->direccion }}<br>
           @if($venta->tipo_comprobante=='Factura C')
             Factura: C<br>
 
@@ -272,7 +272,7 @@
     <table class="table bordered" id="detalle">
       <thead>
         <tr>
-          <th style="width: 100%; text-align: left; font-size:11px; font-family: Arial">Cant.</th>
+          <th style="width: 20%; text-align: left; font-size:11px; font-family: Arial">Cant.</th>
           <th style="width: 100%; text-align: left; font-size:11px; font-family: Arial">Art</th>
           <th style="width: 100%; text-align: left; font-size:11px; font-family: Arial">P. Unit</th>
           <th style="width: 100%; text-align: left; font-size:11px; font-family: Arial">STotal</th>
@@ -281,7 +281,7 @@
       <tbody>
         @foreach($venta->detalles as $det)
           <tr>
-            <td style="width: 100%; text-align: left; font-size:11px; font-family: Arial">{{ $det->cantidad }}x</td>
+            <td style="width: 20%; text-align: left; font-size:11px; font-family: Arial">{{ $det->cantidad }}x</td>
             <td style="width: 100%; text-align: left; font-size:11px; font-family: Arial">
               {{ $det->articulo->nombre }}</td>
             <td style="width: 100%; text-align: left; font-size:11px; font-family: Arial">${{ $det->precio_venta }}
@@ -303,14 +303,7 @@
     </table>
     <hr>
 
-    <div style="width: 100%; text-align: center; font-size:10; font-family: Arial">
-      @if($venta->cae!=null)
-        <img src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl={{ $venta->codigoQr }}"><br>
-        CAE: {{ $venta->cae }} <br>
-        Vto. CAE: {{ $newDate = date("d-m-Y", strtotime($venta->vtocae)) }}<br>
-      @endif
 
-    </div>
   </div>
 </div>
 
@@ -369,7 +362,10 @@
 
     mywindow.document.write('<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 table-responsive">' + document
       .getElementById('ticket').innerHTML + '</div>');
-
+      mywindow.document.write('<div style="width: 100%; text-align: center; font-size:10; font-family: Arial">');
+    mywindow.document.write('<img src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl={{ $venta->codigoQr }}"><br>');
+    mywindow.document.write('CAE: {{ $venta->cae }} <br> Vto. CAE: {{ $newDate = date("d-m-Y", strtotime($venta->vtocae)) }}<br>');
+    mywindow.document.write('</div>');
     mywindow.document.write('</body></html>');
     mywindow.document.close(); // necessary for IE >= 10
     mywindow.focus(); // necessary for IE >= 10*/

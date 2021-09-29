@@ -37,7 +37,7 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <br>
-                        <div class="table">
+                        <div class="table-responsive">
                             <table id="ing" class="table table-striped table-bordered table-condensed table-hover">
                                 <thead>
                                 <th>Fecha</th>
@@ -48,6 +48,19 @@
                                 <th>Estado</th>
                                 <th>Opciones</th>
                                 </thead>
+                                <tfoot>
+                                <tr style="font-size: 20px">
+                                 
+                                 <td id="total"></td>
+                                 <td></td>
+                                 <td></td>
+                                 <td></td>
+                                 <td></td>
+                                 <td></td>
+                                 <td></td>
+                                
+                                </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -63,6 +76,7 @@
     <script>
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
+            tabla_ingreso()
         });
         $.ajaxSetup({
             headers: {
@@ -98,6 +112,33 @@
         });
         $('#btnFiterSubmitSearch').click(function () {
             $('#ing').DataTable().ajax.reload();
+            tabla_ingreso()
         });
+
+
+
+        function tabla_ingreso()
+             {
+             $.ajax({
+                   headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                   type: "GET",
+                   url: "{{route('tablatotalingreso')}}",
+                   dataType: "json",
+                   data: {
+                    start_date: $('#start_date').val(),
+                    end_date: $('#end_date').val()
+                   },
+                   success: function(data) {
+                    if(data[0].Total==null){
+                        $('#total').text('Total $0');
+                    }else{
+                        $('#total').text('Total  $'+data[0].Total);
+                    }
+                    
+                   },
+                  
+               });
+               return false;
+             } 
     </script>
 @stop

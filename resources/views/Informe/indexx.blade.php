@@ -5,14 +5,14 @@
 @section('content')
 <section class="content">
     <div class="box">
-        <div class="box-header with-border">
-            <div class="row">
+        <div   class="box-header with-border">
+        
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <h3>Informes</h3>
                 </div>
-            </div>
+    
 
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div  class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="row">
                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
                         <div class='input-group date' id='datetimepicker5'>
@@ -32,7 +32,11 @@
                 </div>
             </div>
 
-            <div  style="padding: 30px" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h3>Ingresos</h3>
+            </div>
+
+            <div  style="margin-top: 10px" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="row">
                     <div class="col-lg-2 col-xs-12">
                         <!-- small box -->
@@ -51,8 +55,60 @@
                         <!-- small box -->
                         <div class="small-box bg-aqua">
                             <div class="inner">
-                                <h3>$ 1255</h3>
+                                <h3>$ 0</h3>
                                 <p>Ventas Contado</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-chatbox"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-xs-12">
+                        <!-- small box -->
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                <h3>$ 0</h3>
+                                <p>Ventas Credito</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-chatbox"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-xs-12">
+                        <!-- small box -->
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                <h3>$ 0</h3>
+                                <p>Ventas Debito</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-chatbox"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-xs-12">
+                        <!-- small box -->
+                        <div class="small-box bg-yellow">
+                            <div class="inner">
+                                <h3>$ 0</h3>
+                                <p>Devoluciones</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-chatbox"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-xs-12">
+                        <!-- small box -->
+                        <div class="small-box bg-green">
+                            <div class="inner">
+                                <h3>$ 0</h3>
+                                <p>Saldo</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-chatbox"></i>
@@ -62,6 +118,65 @@
 
                 </div>
             </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h3>Egresos</h3>
+            </div>
+
+            <div  style="margin-top: 10px" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div class="col-lg-2 col-xs-12">
+                        <!-- small box -->
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                <h3>$ 0</h3>
+                                <p>Compras</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-chatbox"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-xs-12">
+                        <!-- small box -->
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                <h3>$ 0</h3>
+                                <p>Gastos</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-chatbox"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h3>Ganancia</h3>
+            </div>
+
+            <div  style="margin-top: 10px" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div class="col-lg-2 col-xs-12">
+                        <!-- small box -->
+                        <div class="small-box bg-green">
+                            <div class="inner">
+                                <h3>$ 0</h3>
+                                <p>Total Ganancia</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-chatbox"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
     </div>
 </section>

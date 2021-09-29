@@ -5,11 +5,12 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
-  use Authenticatable, CanResetPassword;
+  use Authenticatable, CanResetPassword, SoftDeletes;
 
   protected $throwValidationExceptions = true;
 
@@ -25,7 +26,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
    *
    * @var array
    */
-  protected $fillable = ['name', 'email','estado','apellido', 'password'];
+  protected $fillable = ['name', 'email','apellido', 'password'];
 
   /**
    * The attributes excluded from the model's JSON form.

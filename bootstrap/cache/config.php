@@ -226,7 +226,7 @@
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'dbobran',
+        'database' => 'dbobranmulti',
         'prefix' => '',
       ),
       'mysql' => 
@@ -234,7 +234,7 @@
         'driver' => 'mysql',
         'host' => 'localhost',
         'port' => '3306',
-        'database' => 'dbobran',
+        'database' => 'dbobranmulti',
         'username' => 'root',
         'password' => '',
         'unix_socket' => '',
@@ -249,7 +249,7 @@
         'driver' => 'pgsql',
         'host' => 'localhost',
         'port' => '3306',
-        'database' => 'dbobran',
+        'database' => 'dbobranmulti',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -350,8 +350,8 @@
     'name' => 'LaravelPWA',
     'manifest' => 
     array (
-      'name' => 'E-pos',
-      'short_name' => 'E-pos',
+      'name' => 'Obran ventas',
+      'short_name' => 'Obran Ventas',
       'start_url' => '/',
       'background_color' => '#ffffff',
       'theme_color' => '#000000',

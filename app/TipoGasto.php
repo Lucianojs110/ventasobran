@@ -5,9 +5,10 @@ namespace SisVentaNew;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Sucursal extends Model
+class TipoGasto extends Model
 {
  
-    
-    protected $table = 'sucursals';
+    protected $table='tipo_gasto';
+
+    protected $primaryKey='id_tipo_gasto';
 }

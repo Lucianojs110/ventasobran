@@ -71,12 +71,14 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         
-        
         if($request->email){
+            
         $usuario=User::where('email',  $request->email)->first();
+        
+        if($usuario){ 
+
         $userRole = DB::table('rols_user')->where('user_id', $usuario->id)->first();
         
-     
         if($userRole->role_id!='1'){
 
         $sucursalUser = SucursalUser::where('user_id', $usuario->id)->get();
@@ -96,7 +98,19 @@ class LoginController extends Controller
             return redirect()->route('login');
             
            }
+       }else{
+
+        $request->session()->regenerate();
+        $this->clearLoginAttempts($request);
+
        }
+    
+    }else{
+
+    
+    }
+    
+    
     }
     
 

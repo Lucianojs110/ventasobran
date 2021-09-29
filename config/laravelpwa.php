@@ -3,8 +3,8 @@
 return [
     'name' => 'LaravelPWA',
     'manifest' => [
-        'name' => env('APP_NAME', 'E-pos'),
-        'short_name' => 'E-pos',
+        'name' => env('APP_NAME', 'Obran ventas'),
+        'short_name' => 'Obran Ventas',
         'start_url' => '/',
         'background_color' => '#ffffff',
         'theme_color' => '#000000',

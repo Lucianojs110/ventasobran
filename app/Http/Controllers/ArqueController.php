@@ -15,7 +15,7 @@ class ArqueController extends Controller
 {
     public function index()
     {
-        $arqueo = Arqueo::where('id_sucursal',session('sucursal'))->where('id_sucursal',session('sucursal'));
+        $arqueo = Arqueo::where('id_sucursal',session('sucursal'))->get();
 
         DB::statement("SET lc_time_names = 'es_ES'");
 
@@ -38,12 +38,19 @@ class ArqueController extends Controller
             ->orderBy('month', 'desc')
             ->get();
 
-        return view('arqueo.index', compact('arqueo','resultado','devolucion', 'ventas'));
+            $ganancias = ArqueoPago::selectRaw('year(created_at) year, monthname(created_at) monthname, month(created_at) month, sum(pago_efectivo) efectivo, sum(pago_debito) debito, sum(pago_credito) credito, sum(monto) data')
+            ->groupBy('year', 'month', 'monthname')
+            ->orderBy('year', 'desc')
+            ->orderBy('month', 'desc')
+            ->where('id_sucursal', session('sucursal'))
+            ->get(); 
+
+        return view('arqueo.index', compact('arqueo','resultado','devolucion', 'ventas', 'ganancias'));
     }
 
     public function tabla()
     {
-        $arqueo = Arqueo::where('id_sucursal',session('sucursal'))->where('id_sucursal',session('sucursal'));
+        $arqueo = Arqueo::where('id_sucursal',session('sucursal'))->get();
       
 
         return Datatables::of($arqueo)
@@ -109,7 +116,7 @@ class ArqueController extends Controller
 
     public function store(Request $request)
     {
-        $arquo = Arqueo::where('estado', 'Abierto')->first();
+        $arquo = Arqueo::where('estado', 'Abierto')->where('id_sucursal',session('sucursal'))->first();
 
         if ($arquo != null)
         {
@@ -203,32 +210,41 @@ class ArqueController extends Controller
 
     public function pagos($id)
     {
-        $arqueo = Arqueo::with('pago')->where('idarqueo', $id)->first();
+        $arqueo = Arqueo::with('pago')->where('idarqueo', $id)->where('id_sucursal',session('sucursal'))->first();
 
         $arqueode = ArqueoPago::where('idarqueo', $id)
-        ->where('tipo_pago', '=',  'Venta' )
+        ->where('id_sucursal',session('sucursal'))
         ->get();
 
-        $arqueoefectivo = ArqueoPago::where('idarqueo', $id)->get();
+        $arqueoefectivo = ArqueoPago::where('idarqueo', $id)
+        ->where('id_sucursal',session('sucursal'))->get();
 
         $ventasdia = ArqueoPago::where('idarqueo', $id)
         ->where('tipo_pago', '=',  'Venta en Cuenta Corriente')
+        ->where('id_sucursal',session('sucursal'))
         ->get();
 
         $devolucion = ArqueoPago::where('idarqueo', $id)
         ->where('tipo_pago','Devolucion')
+        ->where('id_sucursal',session('sucursal'))
         ->get();
         
       
         
-        $ingreso = ArqueoPago::where('idarqueo', $id)->where('tipo_pago','=', 'Ingreso')->get();
+        $ingreso = ArqueoPago::where('idarqueo', $id)
+        ->where('tipo_pago','=', 'Ingreso')
+        ->where('id_sucursal',session('sucursal'))
+        ->get();
 
         return view('arqueo.pago' , compact('arqueo','arqueode', 'id', 'ingreso', 'ventasdia', 'devolucion', 'arqueoefectivo'));
     }
 
     public function tablapago($id)
     {
-        $arqueo = ArqueoPago::where('idarqueo', $id)->orderBy('idarqueo_pago', 'desc')->get();
+        $arqueo = ArqueoPago::where('idarqueo', $id)
+        ->where('id_sucursal',session('sucursal'))
+        ->orderBy('idarqueo_pago', 'desc')
+        ->get();
 
         return Datatables::of($arqueo)
 

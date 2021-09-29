@@ -15,18 +15,18 @@
                             <th>Pago en Efectivo</th>
                             <th>Pago en Debito</th>
                             <th>Pago en Credito</th>
+                            
                            
                             <th>Ganancia</th>
                         </thead>
-                        @foreach ($resultado as $res)
+                        @foreach ($ganancias as $ganancia)
                             <tbody>
                             <tr>
-                                <td>{{$res->month}}/{{$res->year}}</td>
-                                <td>$ {{$res->efectivo}}</td>
-                                <td>$ {{$res->debito}}</td>
-                                <td>$ {{$res->credito}}</td>
-                               
-                                <td>$ {{($res->efectivo)+($res->debito)+($res->credito)}}</td>
+                                <td>{{$ganancia->month}}/{{$ganancia->year}}</td>
+                                <td>$ {{$ganancia->efectivo}}</td>
+                                <td>$ {{$ganancia->debito}}</td>
+                                <td>$ {{$ganancia->credito}}</td>
+                                <td>$ {{($ganancia->data)}}</td>
                             </tr>
                             </tbody>
                         @endforeach

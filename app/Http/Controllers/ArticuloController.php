@@ -13,6 +13,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
 use Automattic\WooCommerce\Client;
 use Automattic\WooCommerce\HttpClient\HttpClientException;
+use SisVentaNew\Sucursal;
 
 class ArticuloController extends Controller
 {
@@ -117,7 +118,8 @@ class ArticuloController extends Controller
       $articulo->save();
 
 
-      $config1 = Config::where('idconfig','=',1)->get();
+      $config1 = Sucursal::where('id',session('sucursal'))->get();
+      
       foreach($config1 as $config){
           $url_API_woo = $config->url_API_woo;
           $ck_API_woo = $config->ck_API_woo;
@@ -245,7 +247,7 @@ class ArticuloController extends Controller
       }
       $articulo->save();
 
-      $config1 = Config::where('idconfig','=',1)->get();
+      $config1 = Sucursal::where('id',session('sucursal'))->get();
       foreach($config1 as $config){
           $url_API_woo = $config->url_API_woo;
           $ck_API_woo = $config->ck_API_woo;
@@ -343,7 +345,7 @@ class ArticuloController extends Controller
 
 
                     try {
-                        $config1 = Config::where('idconfig','=',1)->get();
+                        $config1 = Sucursal::where('id',session('sucursal'))->get();
                         foreach($config1 as $config){
                             $url_API_woo = $config->url_API_woo;
                             $ck_API_woo = $config->ck_API_woo;

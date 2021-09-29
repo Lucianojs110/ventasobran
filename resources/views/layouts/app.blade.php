@@ -189,12 +189,12 @@
                                     @if (Auth::guest())
                                     @else
                                         <li class="sucursal" >
-                                           Sucursal: {{session('nombre_sucursal')}}
+                                           Suc: {{session('nombre_sucursal')}}
                                         </li>
 
                                         <li class="dropdown">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                                               aria-expanded="true">Vendedor: {{Auth::user()->name}} {{ Auth::user()->apellido }}
+                                               aria-expanded="true">{{Auth::user()->name}} 
                                                 <span class="caret"></span></a>
                                             <ul style="background-color: #367fa9; border-color: #367fa9;"
                                                 class="dropdown-menu" role="menu">
@@ -264,7 +264,7 @@
                                     <li class="header"></li>
                                     <li class="treeview {{(Request::route()->getName() == 'articulo.index') ? 'active' :  '' }} ">
                                         <a href="{{ route('articulo.index') }}">
-                                            <i class="fa fa-building"></i>
+                                            <i class="fa fa-cube"></i>
                                             <span>Artículo</span>
                                         </a>
                                     </li>
@@ -275,7 +275,7 @@
                                             <span>Clientes</span>
                                         </a>
                                     </li>
-                                    @canany(['Supervisor', 'Superadmin'])
+                                   
                                     <li class="header"></li>
                                     <li class="treeview {{(Request::route()->getName() == 'proveedor.index') ? 'active' :  '' }} ">
                                         <a href="{{ route('proveedor.index') }}">
@@ -283,7 +283,7 @@
                                             <span>Proveedor</span>
                                         </a>
                                     </li>
-                                    @endcanany
+                              
                                     <li class="header"></li>
                                     <li class="treeview {{(Request::route()->getName() == 'corriente.index') ? 'active' :  '' }} ">
                                         <a href="{{ route('corriente.index') }}">
@@ -298,7 +298,7 @@
                                             <span>Ventas</span>
                                         </a>
                                     </li>
-                                    @canany(['Supervisor', 'Superadmin'])
+                                  
                                     <li class="header"></li>
                                     <li class="treeview {{(Request::route()->getName() == 'ingreso.index') ? 'active' :  '' }} ">
                                         <a href="{{ route('ingreso.index') }}">
@@ -306,7 +306,7 @@
                                             <span>Compras</span>
                                         </a>
                                     </li>
-                                    @endcanany
+                             
                                     <li class="header"></li>
                                     <li class="treeview {{(Request::route()->getName() == 'devolucion.index') ? 'active' :  '' }} ">
                                         <a href="{{ route('devolucion.index') }}">
@@ -314,6 +314,17 @@
                                             <span>Devolución</span>
                                         </a>
                                     </li>
+
+                                  
+                                    <li class="header"></li>
+                                    <li class="treeview {{(Request::route()->getName() == 'gastos.index') ? 'active' :  '' }} ">
+                                        <a href="{{ route('gastos.index') }}">
+                                            <i class="fa  fa-dollar"></i>
+                                            <span>Gastos</span>
+                                        </a>
+                                    </li>
+                                 
+                                    
                                     @can('Superadmin')
                                     <li class="header"></li>
                                     <li class="treeview {{(Request::route()->getName() == 'usuarios.index') ? 'active' :  '' }} ">
@@ -332,11 +343,14 @@
                                         </a>
                                     </li>
                                     @endcanany
-                                    @canany(['Superadmin'])
+
+                                   
+
+                                    @canany(['Supervisor', 'Superadmin'])
                                     <li class="header"></li>
                                     <li class="treeview {{(Request::route()->getName() == 'informe.index') ? 'active' :  '' }} ">
                                         <a href="{{ route('informe.index') }}">
-                                            <i class="fa fa-building"></i>
+                                            <i class="fa fa-line-chart"></i>
                                             <span>Informes</span>
                                         </a>
                                     </li>
@@ -362,10 +376,6 @@
                         <div class="pull-right hidden-xs">
                             <b>Version</b> 2.0.0
                         </div>
-                       
-                            <strong>Copyright &copy; 2021 <a href="#">LyL Sistemas</a>.</strong>
-                     
-            
                     </footer>
 
                     <div class="control-sidebar-bg"></div>

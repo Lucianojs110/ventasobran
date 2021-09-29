@@ -2,7 +2,8 @@
 @section('content')
     <div class="login-box">
          <div class="login-box-msg">
-            <h2><b>E</b>POS</h2>
+            <h2><b>OBRAN</b></h2>
+            <h3>Alimentos Congelados</h3>
             <div class="login-box-body">
                 <p class="login-box-msg">Ingresa tus datos para entrar al Sistema</p>
                         <form id="login-form" action="{{ route('login') }}" method="POST" role="form" novalidate="">
@@ -45,12 +46,6 @@
                             </select>
                         </div>
                     </div>
-
-               
-
-
-                       
-
                             <div class="has-feedback">
                                   <label>
                                     <input  name="remember" type="checkbox" {{ old('remember') ? 'checked' : '' }}>
@@ -59,9 +54,7 @@
                             <div class="has-feedback">
                                 <button type="submit" class="btn btn-block btn-primary">Entrar</button>
                             </div>
-                            <div class="has-feedback">
-                                <p class="text-muted text-xs-center">¿No tienes una cuenta?<a href="{{ route('register') }}"> Registrate!</a></p>
-                            </div>
+                           
                         </form>
             </div>
         </div>

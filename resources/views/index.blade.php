@@ -88,7 +88,7 @@
             <div class="col-lg-3 col-xs-12">
                 <div class="small-box bg-maroon">
                     <div class="inner">
-                        <h3>{{($ventas->sum('data'))+($devolucion->sum('data'))}}</h3>
+                        <h3>{{($ganancias->sum('data'))}}</h3>
                         <p>Total de Ganancias</p>
                     </div>
                     <div class="icon">
