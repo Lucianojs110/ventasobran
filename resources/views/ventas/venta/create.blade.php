@@ -434,6 +434,7 @@
                         
                     }
                 });
+                
 
                 $("#pcantidad").keypress(function(e) {
                 if(e.which == 97) {
@@ -635,14 +636,7 @@
  
                 }
                setTimeout(close(),2000);
-                
-
-
             }
-                  
-                
-        
-
         </script>
         
     @endpush

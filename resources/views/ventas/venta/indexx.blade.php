@@ -133,6 +133,9 @@
                     end_date: $('#end_date').val()
                    },
                    success: function(data) {
+                    
+                    var efectivo = data[0].Total - data[0].Credito - data[0].Debito;
+                    
                     if(data[0].Total==null){
                         $('#total').text('Total $0');
                     }else{
@@ -154,12 +157,9 @@
                     if(data[0].Efectivo==null){
                         $('#efectivo').text('Efectivo $0');
                     }else{
-                        $('#efectivo').text('Efectivo $'+data[0].Efectivo);
+                        $('#efectivo').text('Efectivo $'+parseFloat(efectivo).toFixed(2));
                     }
                    
-                    
-                    
-                    
                     
                    },
                   

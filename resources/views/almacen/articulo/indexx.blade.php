@@ -131,7 +131,7 @@
                    url: "{{route('actualizarprecios')}}",
                    dataType: "json",
                    beforeSend: function () {
-                 document.getElementById("loader").style.display = "block";
+                   document.getElementById("loader").style.display = "block";
                      },
                    data: {
                        idcategoria: $("#idcategoria-act").val(),   

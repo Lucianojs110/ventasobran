@@ -141,7 +141,7 @@ Route::group(['middleware' => 'auth'], function () {
     //INFORMES
     Route::get('/informes', 'InformeController@index')->name('informe.index')->middleware('superv.admin');
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@avisos'])->middleware('supervendedor');
-   
+    Route::get('/tablainforme', 'InformeController@tabla')->name('tablainforme');
 
 
     //    GASTOS

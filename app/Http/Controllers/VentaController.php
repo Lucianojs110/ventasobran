@@ -149,7 +149,7 @@ class VentaController extends Controller
             ->where("fecha_hora", ">=", $f1)
             ->where("fecha_hora", "<=", $f2)
             ->where('id_sucursal', session('sucursal'))
-            ->where('estado', 'Activa')
+            ->where('estado', '!=','Anulada')
             ->get();
 
            
@@ -158,7 +158,7 @@ class VentaController extends Controller
             $venta = DB::table('venta')
             ->select(DB::raw('sum(paga) as Efectivo, sum(tarjeta_debito) as Debito, sum(tarjeta_credito) as Credito ,sum(total_venta) as Total'))
             ->where('id_sucursal', session('sucursal'))
-            ->where('estado', 'Activa')
+            ->where('estado', '!=','Anulada')
             ->get();
 
         }

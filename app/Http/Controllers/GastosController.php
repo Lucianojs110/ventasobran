@@ -88,6 +88,7 @@ class GastosController extends Controller
 
         $tipogastos = TipoGasto::where('id_sucursal', session('sucursal'))
         ->where('activo',1)
+        ->where('id_tipo_gasto','!=',1)
         ->get();
 
      
