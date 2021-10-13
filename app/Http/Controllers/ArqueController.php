@@ -230,7 +230,6 @@ class ArqueController extends Controller
         ->get();
         
       
-        
         $ingreso = ArqueoPago::where('idarqueo', $id)
         ->where('tipo_pago','=', 'Ingreso')
         ->where('id_sucursal',session('sucursal'))

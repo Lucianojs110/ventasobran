@@ -64,10 +64,12 @@ class InformeController extends Controller
 
             $gastos = DB::table('gastos')
             ->join('tipo_gasto', 'tipo_gasto.id_tipo_gasto', '=', 'gastos.id_tipo_gasto')
-            ->select('tipo_gasto.gasto_nombre', 'gastos.id_tipo_gasto')
+            ->join('sucursals', 'gastos.id_sucursal', '=', 'sucursals.id')
+            ->select('tipo_gasto.gasto_nombre', 'gastos.id_tipo_gasto', 'sucursals.nombre')
             ->selectRaw('SUM(gastos.importe) as importe')
             ->where("fecha", ">=", $f1)
             ->where("fecha", "<=", $f2)
+            ->where('gastos.deleted_at', '=', null)
             ->groupBy('gastos.id_tipo_gasto')
             ->get();
 
@@ -75,6 +77,7 @@ class InformeController extends Controller
             ->selectRaw('SUM(gastos.importe) as gasto_total')
             ->where("fecha", ">=", $f1)
             ->where("fecha", "<=", $f2)
+            ->where('gastos.deleted_at', '=', null)
             ->get();
 
             $egreso_total = $gasto_total[0]->gasto_total + $ingreso[0]->Total;
@@ -107,13 +110,16 @@ class InformeController extends Controller
 
             $gastos = DB::table('gastos')
             ->join('tipo_gasto', 'tipo_gasto.id_tipo_gasto', '=', 'gastos.id_tipo_gasto')
-            ->select('tipo_gasto.gasto_nombre', 'gastos.id_tipo_gasto')
+            ->join('sucursals', 'gastos.id_sucursal', '=', 'sucursals.id')
+            ->select('tipo_gasto.gasto_nombre', 'gastos.id_tipo_gasto', 'sucursals.nombre')
+            ->where('gastos.deleted_at', '=', null)
             ->selectRaw('SUM(gastos.importe) as importe')
             ->groupBy('gastos.id_tipo_gasto')
             ->get();
 
             $gasto_total = DB::table('gastos')
             ->selectRaw('SUM(gastos.importe) as gasto_total')
+            ->where('gastos.deleted_at', '=', null)
             ->get();
 
             $egreso_total = $gasto_total[0]->gasto_total + $ingreso[0]->Total;    
@@ -175,9 +181,11 @@ class InformeController extends Controller
 
             $gastos = DB::table('gastos')
             ->join('tipo_gasto', 'tipo_gasto.id_tipo_gasto', '=', 'gastos.id_tipo_gasto')
-            ->select('tipo_gasto.gasto_nombre', 'gastos.id_tipo_gasto')
+            ->join('sucursals', 'gastos.id_sucursal', '=', 'sucursals.id')
+            ->select('tipo_gasto.gasto_nombre', 'gastos.id_tipo_gasto', 'sucursals.nombre')
             ->selectRaw('SUM(gastos.importe) as importe')
             ->where('gastos.id_sucursal', request('sucursal'))
+            ->where('gastos.deleted_at', '=', null)
             ->where("fecha", ">=", $f1)
             ->where("fecha", "<=", $f2)
             ->groupBy('gastos.id_tipo_gasto')
@@ -186,6 +194,7 @@ class InformeController extends Controller
             $gasto_total = DB::table('gastos')
             ->selectRaw('SUM(gastos.importe) as gasto_total')
             ->where('gastos.id_sucursal', request('sucursal'))
+            ->where('gastos.deleted_at', '=', null)
             ->where("fecha", ">=", $f1)
             ->where("fecha", "<=", $f2)
             ->get();
@@ -223,15 +232,18 @@ class InformeController extends Controller
 
             $gastos = DB::table('gastos')
             ->join('tipo_gasto', 'tipo_gasto.id_tipo_gasto', '=', 'gastos.id_tipo_gasto')
-            ->select('tipo_gasto.gasto_nombre', 'gastos.id_tipo_gasto')
+            ->join('sucursals', 'gastos.id_sucursal', '=', 'sucursals.id')
+            ->select('tipo_gasto.gasto_nombre', 'gastos.id_tipo_gasto', 'sucursals.nombre')
             ->selectRaw('SUM(gastos.importe) as importe')
             ->where('gastos.id_sucursal', request('sucursal'))
+            ->where('gastos.deleted_at', '=', null)
             ->groupBy('gastos.id_tipo_gasto')
             ->get();
 
             $gasto_total = DB::table('gastos')
             ->selectRaw('SUM(gastos.importe) as gasto_total')
             ->where('gastos.id_sucursal', request('sucursal'))
+            ->where('gastos.deleted_at', '=', null)
             ->get();
 
             $egreso_total = $gasto_total[0]->gasto_total + $ingreso[0]->Total;    

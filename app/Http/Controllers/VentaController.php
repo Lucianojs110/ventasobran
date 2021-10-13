@@ -735,7 +735,7 @@ class VentaController extends Controller
         
         $codigoart = request('codigoart');    
         if ($request->ajax()) {
-            $articulo = DB::table('articulo')->where('codigo','=', $codigoart)->where('id_sucursal', session('sucursal'))->get()
+            $articulo = DB::table('articulo')->where('codigo','like', '%'. $codigoart. '%')->where('id_sucursal', session('sucursal'))->get()
             ->where('estado', 'Activo');
             return (["articulo"=>$articulo]);    
         return (["articulo"=>$articulo]);    

@@ -30,7 +30,7 @@ class PDFController extends Controller
 
     public function categoria()
     {
-        $categoria = Categoria::All();
+        $categoria = Categoria::where('id_sucursal', session('sucursal'))->get();
 
         view()->share('categoria', $categoria);
 
@@ -42,7 +42,8 @@ class PDFController extends Controller
 
     public function cliente()
     {
-        $personas = Persona::with('ventas.detalles')->where('tipo_persona', 'Cliente')->get();
+        $personas = Persona::with('ventas.detalles')->where('tipo_persona', 'Cliente')->where('id_sucursal', session('sucursal'))->get();
+        
         $pdf = \PDF::loadView('pdf.cliente', compact('personas'));
         return $pdf->download('Clientes.pdf');
     }
@@ -58,7 +59,10 @@ class PDFController extends Controller
     {
         $venta = Venta::with('detalles.articulo', 'cliente', 'usuario')->where('idventa', $id)->orderBy('idventa', 'desc')->first();
         $config = DB::table('config')->first();
-        $pdf = \PDF::loadView('pdf.venta', compact('venta'));
+        $suc = DB::table('sucursals')
+        ->where('id', session('sucursal'))
+        ->first();
+        $pdf = \PDF::loadView('pdf.venta', compact('venta', 'config', 'suc'));
         return $pdf->download('Venta:' . $venta->cliente->nombre . '.pdf');
 
     }
@@ -182,11 +186,14 @@ class PDFController extends Controller
     public function arqueo()
     {
         DB::statement("SET lc_time_names = 'es_ES'");
-        $resultado = ArqueoPago::where('tipo_pago', 'Venta')->selectRaw('year(created_at) year, monthname(created_at) monthname, month(created_at) month, sum(pago_efectivo) efectivo, sum(pago_debito) debito, sum(pago_credito) credito, sum(pago_credito+pago_debito+pago_efectivo) data')
+     
+
+            $resultado = ArqueoPago::selectRaw('year(created_at) year, monthname(created_at) monthname, month(created_at) month, sum(pago_efectivo) efectivo, sum(pago_debito) debito, sum(pago_credito) credito, sum(monto) data')
             ->groupBy('year', 'month', 'monthname')
             ->orderBy('year', 'desc')
             ->orderBy('month', 'desc')
-            ->get();
+            ->where('id_sucursal', session('sucursal'))
+            ->get(); 
 
 
         $config = DB::table('config')

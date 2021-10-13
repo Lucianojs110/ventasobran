@@ -330,7 +330,7 @@
                 
                 for (i = 0; i < data[0].gastos.length; i++) { //cuenta la cantidad de registros
 
-                    var nuevafila = '<tr><td style="width:50%"> ' + data[0].gastos[i].gasto_nombre + ' </td> <td> ' + data[0].gastos[i].importe + ' </td> </tr>'
+                    var nuevafila = '<tr><td style="width:50%">Sucursal ' + data[0].gastos[i].nombre + ': ' + data[0].gastos[i].gasto_nombre + ' </td> <td> ' + data[0].gastos[i].importe + ' </td> </tr>'
                     $("#bodytablagastos").append(nuevafila)
 
                 }

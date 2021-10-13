@@ -175,8 +175,8 @@
       <div id="project" class="clearfix";>
         <div><span class="textoMayu">{{$config->nombre}}</span> {{$config->lema}}</div>
         <div><span class="textoMayu">Vendedor</span> {{$venta->usuario->name}}  {{$venta->usuario->apellido}}</div>
-        <div><span class="textoMayu">Direción</span> {{$config->direccion}}</div>
-        <div><span class="textoMayu">Teléfono</span> {{$config->telefono}}</div>
+        <div><span class="textoMayu">Direción</span> {{$suc->direccion}}</div>
+        <div><span class="textoMayu">Teléfono</span> {{$suc->telefono}}</div>
         <div><span class="textoMayu">Correo Electronico</span> <a href="mailto:{{$config->correo}}">{{$config->correo}}</a></div>
       </div>
     </header>

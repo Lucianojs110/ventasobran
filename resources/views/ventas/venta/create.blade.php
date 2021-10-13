@@ -415,26 +415,26 @@
                     agregar();
                 });
 
-                $("#pcodigo").keypress(function(e) {
-                if(e.which == 32) {
+                //$("#pcodigo").keypress(function(e) {
+                //if(e.which == 32) {
                     
-                    event.preventDefault();
-                        event.target.value += '0';
-
-                 
-                    }
-                 });
+                //    event.preventDefault();
+                //        event.target.value += '0';
+                //    }
+                 //});
                
                 
                 $("#pcodigo").keyup(function(){
             
-                    if ($("#pcodigo").val().length == 13) {
+                   
+                    if ($("#pcodigo").val().length > 7) {
                         consultar_codigo();
-                        $( "#pcantidad" ).focus();
                         
                     }
+                        
+                    
                 });
-                
+
 
                 $("#pcantidad").keypress(function(e) {
                 if(e.which == 97) {
@@ -573,11 +573,14 @@
                    },
                    success: function(data) {
                     console.log(data);
+                    if(data.articulo.length>0){
                      $('#pstock').val(data.articulo[0].stock);
                      $('#pnombre').val(data.articulo[0].nombre);
                      $('#pprecio_venta').val(data.articulo[0].precio_venta);
                      $('#pidarticulo').val(data.articulo[0].idarticulo);
                      $("#pdescuento").val('0');
+                     $( "#pcantidad" ).focus();  
+                    }
                    },
                   
                });
