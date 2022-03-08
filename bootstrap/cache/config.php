@@ -226,7 +226,7 @@
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'dbobranmulti',
+        'database' => 'obranmulti',
         'prefix' => '',
       ),
       'mysql' => 
@@ -234,7 +234,7 @@
         'driver' => 'mysql',
         'host' => 'localhost',
         'port' => '3306',
-        'database' => 'dbobranmulti',
+        'database' => 'obranmulti',
         'username' => 'root',
         'password' => '',
         'unix_socket' => '',
@@ -249,7 +249,7 @@
         'driver' => 'pgsql',
         'host' => 'localhost',
         'port' => '3306',
-        'database' => 'dbobranmulti',
+        'database' => 'obranmulti',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -279,7 +279,7 @@
     array (
       'DOMPDF_FONT_DIR' => 'C:\\laragon\\www\\sisventaobran\\storage\\fonts/',
       'DOMPDF_FONT_CACHE' => 'C:\\laragon\\www\\sisventaobran\\storage\\fonts/',
-      'DOMPDF_TEMP_DIR' => 'C:\\Users\\luciano\\AppData\\Local\\Temp',
+      'DOMPDF_TEMP_DIR' => 'C:\\Users\\lucia\\AppData\\Local\\Temp',
       'DOMPDF_CHROOT' => 'C:\\laragon\\www\\sisventaobran',
       'DOMPDF_UNICODE_ENABLED' => true,
       'DOMPDF_ENABLE_FONT_SUBSETTING' => false,
@@ -610,7 +610,7 @@
   'session' => 
   array (
     'driver' => 'file',
-    'lifetime' => 600,
+    'lifetime' => 100000,
     'expire_on_close' => false,
     'encrypt' => false,
     'files' => 'C:\\laragon\\www\\sisventaobran\\storage\\framework/sessions',

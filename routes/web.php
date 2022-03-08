@@ -77,6 +77,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/consultaproducto', 'VentaController@consultaproducto')->name('consultaproducto')->middleware('supervendedor');
     Route::get('/consultafactura', 'VentaController@consultafactura')->name('consultafactura')->middleware('supervendedor');
     Route::get('/tablatotal', 'VentaController@tabla_total')->name('tablatotal');
+    Route::get('/consultafactura/{id}', 'VentaController@consultafactura')->name('consultafactura');
 
 
 //    INGRESO

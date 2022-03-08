@@ -97,10 +97,6 @@ class ConfigController extends Controller
          $config->impuesto=$request->get('impuesto');
          $config->direccion=$request->get('direccion');
          $config->punto_venta=$request->get('punto');
-         $config->url_API_woo=$request->get('urlAPIwoo');
-         $config->cs_API_woo=$request->get('csAPIwoo');
-         $config->ck_API_woo=$request->get('ckAPIwoo');
-         $config->sincronizar=$request->get('sincronizar');
          $config->alert_minima=7;
          $config->alert_maxima=7;
          $config->estadistica_diaz=7;

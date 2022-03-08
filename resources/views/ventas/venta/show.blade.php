@@ -83,6 +83,15 @@
                                     @endif
                                     </tbody>
                                     <tbody>
+                                    <th>DESCUENTO</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th class="text-derecha"><h4>{{number_format($venta->porcentaje_descuento, 2, '.', '')}}%</h4></th>
+                                    </tbody>
+                                    <tbody>
                                     <th>TOTAL</th>
                                     <th></th>
                                     <th></th>

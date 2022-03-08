@@ -78,13 +78,8 @@
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
             tabla_total()
-        });
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $('#ven').DataTable({
+
+            $('#ven').DataTable({
             processing: true,
             serverSide: true,
             iDisplayLength: 10,
@@ -112,6 +107,15 @@
             },
            
         });
+        });
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+
+            
+        });
+    
         
         $('#btnFiterSubmitSearch').click(function () {
             $('#ven').DataTable().ajax.reload();

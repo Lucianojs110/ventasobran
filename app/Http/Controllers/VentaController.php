@@ -164,29 +164,6 @@ class VentaController extends Controller
         }
         
 
-        /*
-        if ($start_date && $end_date) {
-
-            $f1 = Carbon::parse($start_date);
-            $f2 = Carbon::parse($end_date);
-
-            $venta = DB::table('arqueo_pagos')
-            ->select(DB::raw('sum(pago_efectivo) as Efectivo, sum(pago_debito) as Debito, sum(pago_credito) as Credito ,sum(monto) as Total'))
-            ->where("created_at", ">=", $f1)
-            ->where("created_at", "<=", $f2)
-            ->where('id_sucursal', session('sucursal'))
-            ->get();
-
-           
-        }else{
-
-            $venta = DB::table('arqueo_pagos')
-            ->select(DB::raw('sum(pago_efectivo) as Efectivo, sum(pago_debito) as Debito, sum(pago_credito) as Credito ,sum(monto) as Total'))
-            ->where('id_sucursal', session('sucursal'))
-            ->get();
-
-        }
-        */
        
         return $venta;
     }
@@ -221,11 +198,11 @@ class VentaController extends Controller
         {
 
             $corriente = CuentaCorriente::where('idcliente', $request->idcliente2)->where('estado','Sin Cancelar')->first();
-            $ultimo = Venta::orderBy('idventa', 'desc')->first();
+            $ultimo = Venta::orderBy('idventa', 'desc')->where('id_sucursal', session('sucursal'))->first();
             $ultimo2 = CuentaCorriente::orderBy('idcuenta_corriente', 'desc')->first();
             if ($corriente == null)
             {
-                $to = $request->get('total_venta') + $request->get('monto_porcentaje');
+                $to = $request->get('total_des') + $request->get('monto_porcentaje');
                 $venta = new CuentaCorriente();
                 $venta->idcliente = $request->get('idcliente2');
                 $venta->id_sucursal = session('sucursal');
@@ -233,6 +210,7 @@ class VentaController extends Controller
                 $venta->num_comprobante =   $ultimo->idventa;
                 $venta->monto_porcentaje = $request->get('monto_porcentaje');
                 $venta->porcentaje_credito = $request->get('porcentaje_credito');
+                $venta->porcentaje_descuento = $request->get('descuento_total');
                 $venta->total_venta = $to;
                 $venta->paga = $request->paga;
                 $venta->tarjeta_debito = $request->tarjeta_debito;
@@ -356,7 +334,7 @@ class VentaController extends Controller
             {
                 $corriente = CuentaCorriente::where('idcliente', $request->idcliente)->where('estado','Sin Cancelar')->first();
 
-                $to = $request->get('total_venta') + $request->get('monto_porcentaje');
+                $to = $request->get('total_des') + $request->get('monto_porcentaje');
 
                 $corrienteCorriente = CuentaCorriente::find($corriente->idcuenta_corriente);
                 $corrienteCorriente->total_venta = $to + $corriente->total_venta;
@@ -474,7 +452,7 @@ class VentaController extends Controller
         else
         {
 
-            $to = $request->get('total_venta') + $request->get('monto_porcentaje');
+            $to = $request->get('total_des') + $request->get('monto_porcentaje');
             $venta = new Venta;
             $venta->idcliente = $request->get('idcliente2');
             $venta->id_sucursal = session('sucursal'); 
@@ -482,6 +460,7 @@ class VentaController extends Controller
             $venta->num_comprobante = $request->get('num_comprobante');
             $venta->monto_porcentaje = $request->get('monto_porcentaje');
             $venta->porcentaje_credito = $request->get('porcentaje_credito');
+            $venta->porcentaje_descuento = $request->get('descuento_total');
             $venta->total_venta = $to;
             $venta->idusuario = $request->get('idusuario');
             $venta->paga = $request->paga;
@@ -540,7 +519,7 @@ class VentaController extends Controller
 
             if ($request->tarjeta_debito == 0 and $request->tarjeta_credito == 0 and $request->paga != 0) {
 //                efectivo
-                $pago->pago_efectivo = $request->get('total_venta'); 
+                $pago->pago_efectivo = $request->get('total_des'); 
                 $pago->pago_debito = 0;
                 $pago->pago_credito = 0;
 
@@ -557,7 +536,7 @@ class VentaController extends Controller
             } elseif ($request->paga != 0 and $request->tarjeta_credito != 0) {
 //                credito y efectivo
 
-                $total = (($request->tarjeta_credito + ($request->paga - $request->get('total_venta'))) - $request->paga) * -1;
+                $total = (($request->tarjeta_credito + ($request->paga - $request->get('total_des'))) - $request->paga) * -1;
 
                 $pago->pago_efectivo = $total;
                 if($request->tarjeta_debito==null){
@@ -570,7 +549,7 @@ class VentaController extends Controller
             } elseif ($request->paga != 0 and $request->tarjeta_debito != 0) {
 //                debito y efectivo
 
-                $total = (($request->tarjeta_debito + ($request->paga - $request->get('total_venta'))) - $request->paga) * -1;
+                $total = (($request->tarjeta_debito + ($request->paga - $request->get('total_des'))) - $request->paga) * -1;
 
                 $pago->pago_efectivo = $total;
                 if($request->tarjeta_debito==null){
@@ -775,7 +754,7 @@ class VentaController extends Controller
     }
 
 
-    public function consultafactura(Request $request)
+    public function consultafactura(Request $request, $id)
     {
         
         $config=DB::table('config')->where('idconfig','=','1')->get();
@@ -787,7 +766,7 @@ class VentaController extends Controller
         }
 
         $afip = new Afip(array('CUIT' => $cuit));
-        $voucher_info = $afip->ElectronicBilling->GetVoucherInfo(5,2,11); //Devuelve la información del comprobante 1 para el punto de venta 1 y el tipo de comprobante 6 (Factura B)
+        $voucher_info = $afip->ElectronicBilling->GetVoucherInfo($id,2,11); //Devuelve la información del comprobante 1 para el punto de venta 1 y el tipo de comprobante 6 (Factura B)
 
         if($voucher_info === NULL){
            echo 'El comprobante no existe';
@@ -798,7 +777,7 @@ class VentaController extends Controller
            print_r($voucher_info);
            echo '</pre>';
         }
-        dd($voucher_info);
+        //dd($voucher_info);
        
 
     }
